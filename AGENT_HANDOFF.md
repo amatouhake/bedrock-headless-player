@@ -5,12 +5,12 @@ The first headless-player milestone and its review remediation are complete and 
 ## Current state
 
 - Canonical repository: `/home/kenke/bedrock-fake-player-lab/bedrock-headless-player`
-- Branch in all writable repositories: `feat/bedrock-1.26.50`
+- Project branch: `feat/trusted-key-auth`; both PrismarineJS forks remain on `feat/bedrock-1.26.50`
 - Official server tested: BDS 1.26.51.1, build 51061372
 - Negotiated schema: Bedrock 1.26.50, protocol 2193
-- `minecraft-data`: `098d90ab`
-- `bedrock-protocol`: `74e1914f`
-- live-tested application commit: `f045ce2b`
+- `minecraft-data`: `7c1fe886dd92837c0550e8eff91440361c7d677f`
+- `bedrock-protocol`: `fb0af8e388127724c323fd46800e47ba004b1c55`
+- authentication work started from application checkpoint: `8feb3475d37b7c50e90c5ccd5fcbb2ff3c702013`
 - Mojang reference: `refs/bedrock-protocol-docs`, tag `v1.26.50`, commit `475bd72e`
 - obsolete bootstrap directory: `tmp/obsolete-bootstrap-project-20260916`
 
@@ -19,6 +19,8 @@ The 1.26.50 BDS uses NetherNet/WebRTC for gameplay. The protocol fork signs offl
 The data fork preserves 1.26.45 and adds generated 1.26.50 protocol data. It now includes the reviewed optional gathering fields, noise alignment, diagnostic position/dimension, debug-text line gap, pack-setting string arrays, and the exact 1.26.50 global block-state palette pinned by Geyser's 1.26.50 generator tag. The critical Cereal transition removes redundant outer presence markers from `PlayerAuthInput`, `InventoryTransaction`, and `ItemStackResponse`; normal optionals retain one marker.
 
 The application completes resource-pack and loading-screen negotiation, requests a chunk radius, follows authoritative movement corrections, sends input at 20 Hz, moves briefly with the `up` input, returns to neutral ticks, and disconnects cleanly. The live harness waits before reusing the offline identity so BDS can destroy the prior WebRTC session.
+
+The separate `feat/trusted-key-auth` investigation found no Microsoft-free online-mode path on BDS 1.26.51.1. NetherNet self-signed and trusted-key identities both establish signaling/DTLS and negotiate protocol 2193, then fail at the Bedrock Login packet. This release explicitly disables RakNet player connections before authentication. The project rejects `--auth trusted-key` and `--transport raknet` early; see `AUTHENTICATION.md` and `evidence/2026-09-17-trusted-key-auth.md`.
 
 ## Operational notes
 

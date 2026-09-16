@@ -23,6 +23,8 @@ class HeadlessPlayer {
       username: 'HeadlessPlayer',
       version: '1.26.50',
       protocol: 2193,
+      auth: 'offline',
+      transport: 'nethernet',
       idleBeforeMs: 3000,
       moveMs: 2000,
       idleAfterMs: 10000,
@@ -30,6 +32,18 @@ class HeadlessPlayer {
       protocolPath: path.join(__dirname, '..', '..', 'forks', 'bedrock-protocol'),
       serverIdentityPinPath: path.join(__dirname, '..', '..', 'tmp', 'bds-runtime', 'server-identity.pin'),
       ...options
+    }
+    if (this.options.auth === 'trusted-key') {
+      throw new Error('trusted-key authentication is unavailable with BDS 1.26.51.1/protocol 2193: online NetherNet reaches Bedrock login but rejects current self-signed tokens and historical trusted certificate chains')
+    }
+    if (this.options.auth !== 'offline') {
+      throw new Error(`Unsupported authentication mode: ${this.options.auth}`)
+    }
+    if (this.options.transport === 'raknet') {
+      throw new Error('RakNet is unavailable in BDS 1.26.51.1: this release accepts only NetherNet player connections')
+    }
+    if (this.options.transport !== 'nethernet') {
+      throw new Error(`Unsupported transport: ${this.options.transport}`)
     }
     this.tick = 0n
     this.position = null

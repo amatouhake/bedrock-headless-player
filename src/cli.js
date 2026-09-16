@@ -26,6 +26,8 @@ async function main () {
     host: options.host,
     port: options.port && Number(options.port),
     username: options.username,
+    auth: options.auth,
+    transport: options.transport,
     position: position(options.position),
     protocolPath: options['protocol-path'] || process.env.BEDROCK_PROTOCOL_PATH,
     serverIdentityPinPath: options['server-identity-pin-path'],

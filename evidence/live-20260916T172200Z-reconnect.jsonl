@@ -1,0 +1,15 @@
+{"time":"2026-09-16T17:22:21.776Z","event":"server_identity_pin_loaded","pin":"sha256:2786a74a1a477a9ba8ced956da407a8a441d62c05a344645b4f010ee311814e6"}
+{"time":"2026-09-16T17:22:21.803Z","event":"transport","message":"Connecting to 127.0.0.1:19176 Bedrock Protocol Server (bedrock-protocol), version 1.26.50 "}
+{"time":"2026-09-16T17:22:23.181Z","event":"network_settings","requestedProtocol":2193,"expectedProtocol":2193,"compression":"deflate"}
+{"time":"2026-09-16T17:22:23.205Z","event":"play_status","status":"login_success"}
+{"time":"2026-09-16T17:22:23.206Z","event":"resource_packs_info","mustAccept":false,"packCount":0}
+{"time":"2026-09-16T17:22:23.328Z","event":"start_game","runtimeEntityId":"20","position":{"x":0.5,"y":32769.62109375,"z":0.5},"positionSource":"start-game","spawnPosition":{"x":0,"y":32767,"z":0},"serverTick":"92050","inputTick":"1","engine":"1.26.51"}
+{"time":"2026-09-16T17:22:23.329Z","event":"loading_screen_started"}
+{"time":"2026-09-16T17:22:25.591Z","event":"loading_screen_completed"}
+{"time":"2026-09-16T17:22:25.591Z","event":"spawn","position":{"x":0.5,"y":32769.62109375,"z":0.5}}
+{"time":"2026-09-16T17:22:25.592Z","event":"play_status","status":"player_spawn"}
+{"time":"2026-09-16T17:22:25.909Z","event":"movement_correction","tick":"6","position":{"x":0.5,"y":69.62001037597656,"z":0.5}}
+{"time":"2026-09-16T17:22:26.592Z","event":"movement_started","position":{"x":0.5,"y":69.62001037597656,"z":0.5}}
+{"time":"2026-09-16T17:22:26.593Z","event":"movement_stopped","position":{"x":0.5,"y":69.62001037597656,"z":0.5}}
+{"time":"2026-09-16T17:22:28.593Z","event":"stable","position":{"x":0.5,"y":69.62001037597656,"z":0.5},"corrections":1,"sentTicks":59,"neutralTicks":59,"movementTicks":0,"postStopDisplacement":0,"durationMs":3000}
+{"time":"2026-09-16T17:22:28.594Z","event":"disconnected_cleanly"}
