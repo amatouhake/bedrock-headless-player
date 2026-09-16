@@ -1,0 +1,15 @@
+{
+  "name": "bedrock-headless-player",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal Minecraft Bedrock headless player",
+  "main": "src/player.js",
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
