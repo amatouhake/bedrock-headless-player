@@ -1,91 +1,29 @@
 # Agent handoff
 
-## Mission
+The first headless-player milestone is complete and live-tested. Read `README.md` for setup and `evidence/2026-09-16-live-test.md` for the proof run.
 
-Build the smallest useful headless Minecraft Bedrock player client for a self-hosted Bedrock Dedicated Server (BDS).
+## Current state
 
-The first success condition is not “Mineflayer for Bedrock.” It is:
+- Canonical repository: `/home/kenke/bedrock-fake-player-lab/bedrock-headless-player`
+- Branch in all writable repositories: `feat/bedrock-1.26.50`
+- Official server tested: BDS 1.26.51.1, build 51061372
+- Negotiated schema: Bedrock 1.26.50, protocol 2193
+- `minecraft-data`: `4e99c655`
+- `bedrock-protocol`: `9cdadae`
+- live-tested application commit: `6f5adee`
+- Mojang reference: `refs/bedrock-protocol-docs`, tag `v1.26.50`, commit `475bd72e`
+- obsolete bootstrap directory: `tmp/obsolete-bootstrap-project-20260916`
 
-- connect to the local BDS as a real player session;
-- complete login/resource-pack/start-game/spawn lifecycle;
-- remain connected reliably;
-- send valid `PlayerAuthInput` and demonstrate simple movement;
-- keep the implementation small enough that future Bedrock protocol bumps are cheap to port.
+The 1.26.50 BDS uses NetherNet/WebRTC for gameplay. The protocol fork supplies HTTP SDP signaling, offline ES384 identity binding, data-channel framing, and transport-aware packet framing. Inner Minecraft encryption is skipped because DTLS secures NetherNet. RakNet remains available for older versions.
 
-## Workspace
+The data fork preserves 1.26.45 and adds generated 1.26.50 protocol data. The critical Cereal transition removes redundant outer presence markers from `PlayerAuthInput`, `InventoryTransaction`, and `ItemStackResponse`; normal optionals retain one marker. `PlayerAuthInput` values preserve reserved numeric gaps. Coupled StartGame, item, sound, actor-delta, dimension, camera-preset, and packet-ID changes are represented.
 
-Assume the surrounding workspace already exists:
+The application completes resource-pack and loading-screen negotiation, requests a chunk radius, follows authoritative movement corrections, sends input at 20 Hz, moves briefly with the `up` input, returns to neutral ticks, and disconnects cleanly. The live harness waits before reusing the offline identity so BDS can destroy the prior WebRTC session.
 
-```text
-/home/kenke/bedrock-fake-player-lab/
-├── project/                    # this repository
-├── server/current/             # local BDS runtime
-├── forks/bedrock-protocol/     # user fork; upstream should be PrismarineJS/bedrock-protocol
-├── forks/minecraft-data/       # user fork; upstream should be PrismarineJS/minecraft-data
-├── refs/bedrock-protocol-docs/ # Mojang/bedrock-protocol-docs; reference only
-├── captures/
-├── notes/
-└── tmp/
-```
+## Operational notes
 
-Before changing anything, verify the actual paths, git remotes, branch names, working-tree cleanliness, and current SHAs. Do not assume the bootstrap state is perfect.
+Use `scripts/setup-dev.sh` after changing either fork. Use `scripts/live-test.sh` for the complete cold integration test. It owns server cleanup only when it starts the server itself. Runtime server files belong under `server/` and `tmp/`, never in this repository.
 
-## Current context to verify before coding
+The local server deliberately has `online-mode=false`. Keep it local and do not expose port 19132 to an untrusted network. No Microsoft credentials or authentication caches are needed or stored.
 
-As of 2026-09-16, the relevant transition was Bedrock 1.26.45 -> 1.26.50. Re-check upstream before relying on this because the ecosystem moves quickly.
-
-At that point:
-
-- PrismarineJS `bedrock-protocol` supported 1.26.45;
-- Mojang published 1.26.50 protocol metadata/docs;
-- Mojang documented binary wire-format changes affecting `PlayerAuthInputPacket`, `InventoryTransactionPacket`, and `ItemStackResponsePacket` due removal of redundant Cereal presence markers;
-- Mojang also documented StartGame-related behavior changes.
-
-Treat Mojang protocol docs as the primary reference, then compare PrismarineJS `minecraft-data` schemas and `bedrock-protocol` behavior.
-
-## Implementation policy
-
-1. Start with inspection and a concrete compatibility gap report.
-2. Prefer fixing protocol data in `forks/minecraft-data` when the problem is schema/data-driven.
-3. Change `forks/bedrock-protocol` only when runtime/login/handshake behavior requires it.
-4. Keep this project repository focused on the thin headless-player runtime and integration tests.
-5. Do not vendor whole upstream repositories into this project.
-6. Record every upstream/fork SHA used for a successful live test.
-7. Add a reproducible minimal live test against the local BDS.
-8. Never commit credentials, auth caches, packet captures containing secrets, or BDS world data.
-
-## Authentication / server policy
-
-The BDS is self-hosted, but do not silently weaken its authentication or security configuration. Inspect the existing `server.properties` first.
-
-If an offline/local-only setup is useful for protocol debugging, document the proposed change and its consequences before changing `online-mode` or related settings. Prefer keeping protocol compatibility work independent from authentication policy where possible.
-
-## First milestone
-
-A good first milestone should prove all of the following with logs or tests:
-
-1. the client negotiates the intended current protocol version;
-2. it reaches `start_game`/spawn without parse or serialization errors;
-3. it remains connected for a meaningful interval;
-4. it can send neutral `PlayerAuthInput` ticks safely;
-5. it can move a short, controlled distance and stop;
-6. reconnect/cleanup does not leave a broken process or stale state.
-
-## Explicit non-goals for the first milestone
-
-Do not implement these unless they become strictly necessary to prove the milestone:
-
-- pathfinding;
-- full chunk/world modeling;
-- block search;
-- inventory automation;
-- crafting;
-- combat logic;
-- visual perception;
-- LLM/agent orchestration;
-- multi-agent support;
-- public-server compatibility hacks.
-
-## Expected working style
-
-Investigate first, then make the smallest patch that is justified by evidence. Keep protocol-version changes isolated and easy to diff against upstream. If the newest Bedrock version requires a broad PrismarineJS update, separate “minimum needed for this client” from “complete upstream-quality protocol support” and report that distinction clearly.
+Keep future work narrow. Add protocol fixes to `minecraft-data`, transport/session fixes to `bedrock-protocol`, and player behavior here. The project deliberately excludes world modeling, pathfinding, inventory automation, crafting, combat, and public-server compatibility work.
