@@ -63,7 +63,7 @@ Download the exact official BDS archive used by the test and verify its SHA-256:
 
 The expected archive is `bedrock-server-1.26.51.1.zip`, SHA-256 `ad91d3b824e51ea50b5bb601c295cbd8f543a29b14315c2ad89ff27311e2d860`.
 
-The configuration script selects NetherNet, disables Xbox authentication and the allow list, disables LAN visibility, and leaves the server on port 19132 for this local test harness. `online-mode=false` permits self-signed offline identities. Do not expose this unauthenticated test server to a public or untrusted network.
+The configuration script selects NetherNet, disables Xbox authentication and the allow list, disables LAN visibility, and uses port 19132 by default. Set `BDS_PORT=19142 ./scripts/configure-server.sh` to select another local port; the start and live-test scripts read it from `server.properties`. `online-mode=false` permits self-signed offline identities. Do not expose this unauthenticated test server to a public or untrusted network.
 
 Start, issue a console command, and stop the managed server with:
 
@@ -73,7 +73,7 @@ Start, issue a console command, and stop the managed server with:
 ./scripts/stop-server.sh
 ```
 
-The scripts keep the BDS process and FIFO under `../tmp/bds-runtime`, wait for its HTTP signaling endpoint, shut it down through the console, and verify process exit. Binaries, worlds, logs, and runtime state stay outside this repository.
+The scripts keep the BDS process and FIFO under `../tmp/bds-runtime`, wait for its HTTP signaling endpoint, shut it down through the console, and verify process exit. Vanilla BDS generates a new self-signed NetherNet identity on each process start, so the managed start script clears the loopback-only TOFU pin at that point. Reconnects to the same process verify the saved pin. Binaries, worlds, logs, and runtime state stay outside this repository.
 
 ## Client
 

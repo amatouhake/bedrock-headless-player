@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const path = require('path')
 
 function loadProtocol (modulePath) {
@@ -27,6 +28,7 @@ class HeadlessPlayer {
       idleAfterMs: 10000,
       speedPerTick: 0.215,
       protocolPath: path.join(__dirname, '..', '..', 'forks', 'bedrock-protocol'),
+      serverIdentityPinPath: path.join(__dirname, '..', '..', 'tmp', 'bds-runtime', 'server-identity.pin'),
       ...options
     }
     this.tick = 0n
@@ -47,14 +49,27 @@ class HeadlessPlayer {
 
   connect () {
     this.protocol = loadProtocol(this.options.protocolPath)
+    let serverIdentityPin
+    if (fs.existsSync(this.options.serverIdentityPinPath)) {
+      serverIdentityPin = fs.readFileSync(this.options.serverIdentityPinPath, 'utf8').trim()
+      if (serverIdentityPin) this.log('server_identity_pin_loaded', { pin: serverIdentityPin })
+    }
     this.client = this.protocol.createClient({
       host: this.options.host,
       port: this.options.port,
       username: this.options.username,
       version: this.options.version,
       offline: true,
-      skipPing: true,
       raknetBackend: 'nethernet',
+      nethernetServerKeyPin: serverIdentityPin || undefined,
+      onNetherNetServerTrust: identity => {
+        if (!['127.0.0.1', 'localhost', '::1'].includes(this.options.host)) return false
+        fs.mkdirSync(path.dirname(this.options.serverIdentityPinPath), { recursive: true })
+        fs.writeFileSync(this.options.serverIdentityPinPath, `${identity.pin}\n`, { mode: 0o600 })
+        this.log('server_identity_trusted', { pin: identity.pin, domain: identity.domain })
+        return true
+      },
+      conLog: message => this.log('transport', { message }),
       connectTimeout: 15000
     })
 
@@ -99,7 +114,7 @@ class HeadlessPlayer {
     this.client.on('correct_player_move_prediction', packet => {
       if (packet.prediction_type !== 'player') return
       this.position = copyPosition(packet.position)
-      this.tick = BigInt(packet.tick) + 1n
+      this.advanceInputTick(packet.tick)
       this.corrections.push({ tick: String(packet.tick), position: copyPosition(packet.position) })
       this.log('movement_correction', this.corrections.at(-1))
     })
@@ -114,7 +129,7 @@ class HeadlessPlayer {
         return
       }
       this.position = copyPosition(packet.position)
-      this.tick = BigInt(packet.tick) + 1n
+      this.advanceInputTick(packet.tick)
       this.log('server_position', {
         mode: packet.mode,
         position: copyPosition(packet.position),
@@ -140,6 +155,11 @@ class HeadlessPlayer {
 
   startTicks () {
     this.timer = setInterval(() => this.sendTick(), 50)
+  }
+
+  advanceInputTick (acknowledgedTick) {
+    const next = BigInt(acknowledgedTick) + 1n
+    if (next > this.tick) this.tick = next
   }
 
   sendTick () {

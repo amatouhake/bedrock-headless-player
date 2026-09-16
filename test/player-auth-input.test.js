@@ -6,6 +6,7 @@ const test = require('node:test')
 
 const protocolRoot = path.resolve(__dirname, '..', '..', 'forks', 'bedrock-protocol')
 const { createDeserializer, createSerializer } = require(path.join(protocolRoot, 'src', 'transforms', 'serializer'))
+const { HeadlessPlayer } = require('../src/player')
 
 test('1.26.50 neutral PlayerAuthInput has one marker per optional', () => {
   const serializer = createSerializer('1.26.50')
@@ -34,4 +35,15 @@ test('1.26.50 neutral PlayerAuthInput has one marker per optional', () => {
   assert.equal(decoded.params.tick, 42n)
   assert.equal(decoded.params.transaction, undefined)
   assert.equal(encoded.length, 92)
+})
+
+test('server corrections never rewind PlayerInputTick', () => {
+  const player = new HeadlessPlayer()
+  player.tick = 80n
+  player.advanceInputTick(42n)
+  assert.equal(player.tick, 80n)
+  player.advanceInputTick(79n)
+  assert.equal(player.tick, 80n)
+  player.advanceInputTick(100n)
+  assert.equal(player.tick, 101n)
 })

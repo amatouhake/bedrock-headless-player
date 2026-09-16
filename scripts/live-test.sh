@@ -4,10 +4,12 @@ set -euo pipefail
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LAB_ROOT="$(cd "$PROJECT_ROOT/.." && pwd)"
 EVIDENCE_DIR="$PROJECT_ROOT/evidence"
+SERVER_PORT="$(sed -n 's/^server-port=//p' "$LAB_ROOT/server/current/server.properties" | tail -1)"
+SERVER_PORT="${SERVER_PORT:-19132}"
 mkdir -p "$EVIDENCE_DIR"
 
 started_here=false
-if ! curl --connect-timeout 1 --max-time 2 -fsS "http://127.0.0.1:19132/v1/join" >/dev/null 2>&1; then
+if ! curl --connect-timeout 1 --max-time 2 -fsS "http://127.0.0.1:$SERVER_PORT/v1/join" >/dev/null 2>&1; then
   "$PROJECT_ROOT/scripts/start-server.sh"
   started_here=true
 fi
@@ -32,6 +34,7 @@ wait_for_event() {
 }
 
 node "$PROJECT_ROOT/src/cli.js" \
+  --port "$SERVER_PORT" \
   --idle-before-ms 4000 --move-ms 1000 --idle-after-ms 6000 \
   > >(tee "$first") &
 client_pid=$!
@@ -52,6 +55,7 @@ wait "$client_pid"
 # WebRTC peer logs in. Immediate reuse can race the server's session teardown.
 sleep 3
 node "$PROJECT_ROOT/src/cli.js" \
+  --port "$SERVER_PORT" \
   --idle-before-ms 1000 --move-ms 0 --idle-after-ms 2000 | tee "$second"
 
 if [[ -f "$LAB_ROOT/tmp/bds-runtime/bds.log" ]]; then
@@ -70,10 +74,12 @@ const requireEvent = (entries, name) => {
   return event
 }
 for (const name of ['network_settings', 'resource_packs_info', 'start_game', 'loading_screen_completed', 'spawn', 'movement_started', 'movement_stopped', 'stable', 'disconnected_cleanly']) requireEvent(first, name)
+if (!first.some(entry => entry.event === 'server_identity_trusted' || entry.event === 'server_identity_pin_loaded')) throw new Error('Server identity was not trusted or pinned')
 if (requireEvent(first, 'network_settings').requestedProtocol !== 2193) throw new Error('Protocol was not 2193')
 const stable = requireEvent(first, 'stable')
 if (stable.movementTicks < 1 || stable.neutralTicks < 20) throw new Error('Insufficient movement or neutral input ticks')
 for (const name of ['network_settings', 'spawn', 'stable', 'disconnected_cleanly']) requireEvent(second, name)
+requireEvent(second, 'server_identity_pin_loaded')
 NODE
 
 echo "Live lifecycle, movement, stop, and reconnect passed."

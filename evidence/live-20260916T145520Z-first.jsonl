@@ -1,0 +1,17 @@
+{"time":"2026-09-16T14:55:20.598Z","event":"transport","message":"Connecting to 127.0.0.1:19152 Bedrock Protocol Server (bedrock-protocol), version 1.26.50 "}
+{"time":"2026-09-16T14:55:21.108Z","event":"server_identity_trusted","pin":"sha256:bbf7c277f5ada4578746bd6b6b4bbe7681e5f119c3a50732759d0b891de54a99","domain":"self"}
+{"time":"2026-09-16T14:55:22.120Z","event":"network_settings","requestedProtocol":2193,"expectedProtocol":2193,"compression":"deflate"}
+{"time":"2026-09-16T14:55:22.146Z","event":"play_status","status":"login_success"}
+{"time":"2026-09-16T14:55:22.146Z","event":"resource_packs_info","mustAccept":false,"packCount":0}
+{"time":"2026-09-16T14:55:22.266Z","event":"start_game","runtimeEntityId":"1","position":{"x":0.5,"y":32769.62109375,"z":0.5},"positionSource":"start-game","spawnPosition":{"x":0,"y":32767,"z":0},"serverTick":"78548","inputTick":"1","engine":"1.26.51"}
+{"time":"2026-09-16T14:55:22.267Z","event":"loading_screen_started"}
+{"time":"2026-09-16T14:55:24.375Z","event":"loading_screen_completed"}
+{"time":"2026-09-16T14:55:24.376Z","event":"spawn","position":{"x":0.5,"y":32769.62109375,"z":0.5}}
+{"time":"2026-09-16T14:55:24.376Z","event":"play_status","status":"player_spawn"}
+{"time":"2026-09-16T14:55:24.690Z","event":"movement_correction","tick":"6","position":{"x":0.5,"y":69.62001037597656,"z":0.5}}
+{"time":"2026-09-16T14:55:28.376Z","event":"movement_started","position":{"x":0.5,"y":69.62001037597656,"z":0.5}}
+{"time":"2026-09-16T14:55:28.905Z","event":"movement_correction","tick":"90","position":{"x":0.5,"y":69.62001037597656,"z":2.7121005058288574}}
+{"time":"2026-09-16T14:55:29.376Z","event":"movement_stopped","position":{"x":0.5,"y":69.62001037597656,"z":4.647100505828856}}
+{"time":"2026-09-16T14:55:29.896Z","event":"movement_correction","tick":"110","position":{"x":0.5,"y":69.62001037597656,"z":4.800103187561035}}
+{"time":"2026-09-16T14:55:35.376Z","event":"stable","position":{"x":0.5,"y":69.62001037597656,"z":4.800103187561035},"corrections":3,"sentTicks":219,"neutralTicks":199,"movementTicks":20,"postStopDisplacement":0.153002681732179,"durationMs":11000}
+{"time":"2026-09-16T14:55:35.377Z","event":"disconnected_cleanly"}

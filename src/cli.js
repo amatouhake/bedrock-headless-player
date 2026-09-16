@@ -28,6 +28,7 @@ async function main () {
     username: options.username,
     position: position(options.position),
     protocolPath: options['protocol-path'] || process.env.BEDROCK_PROTOCOL_PATH,
+    serverIdentityPinPath: options['server-identity-pin-path'],
     idleBeforeMs: options['idle-before-ms'] && Number(options['idle-before-ms']),
     moveMs: options['move-ms'] && Number(options['move-ms']),
     idleAfterMs: options['idle-after-ms'] && Number(options['idle-after-ms']),

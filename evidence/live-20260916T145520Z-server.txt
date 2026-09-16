@@ -1,0 +1,85 @@
+NO LOG FILE! - setting up server logging...
+[2026-09-16 23:55:19:078 INFO] Starting Server
+[2026-09-16 23:55:19:078 INFO] Version: 1.26.51.1
+[2026-09-16 23:55:19:078 INFO] Session ID: ce1189b7-2afc-4962-a707-933c129efee0
+[2026-09-16 23:55:19:078 INFO] Build ID: 51061372
+[2026-09-16 23:55:19:078 INFO] Branch: r/26_u5
+[2026-09-16 23:55:19:078 INFO] Commit ID: 0559ac59aa24e42d30e238bc55cdb306232a6507
+[2026-09-16 23:55:19:078 INFO] Configuration: Publish
+[2026-09-16 23:55:19:078 INFO] Contents of server.properties: {}
+[2026-09-16 23:55:19:078 INFO] Level Name: Headless Player Lab
+[2026-09-16 23:55:19:078 INFO] Profiler config ('bootstrap.json') load result: success=1, errorMessage=(null)
+[2026-09-16 23:55:19:080 INFO] No CDN config file found at: cdn_config.json for dedicated server
+[2026-09-16 23:55:19:080 INFO] Game mode: 0 Survival
+[2026-09-16 23:55:19:080 INFO] Difficulty: 1 EASY
+[2026-09-16 23:55:19:082 WARN] Content logging to console is disabled.  Enable it with content-log-console-output-enabled=true in server.properties
+[2026-09-16 23:55:19:084 INFO] 
+
+#####################################################
+#                                                   #
+#               LOADING VANILLA WORLD               #
+#                                                   #
+#####################################################
+[2026-09-16 23:55:19:631 INFO] Content logging to disk is enabled. Writing log to: ContentLog2026-09-16_23-55-19
+[2026-09-16 23:55:19:632 INFO] Opening level 'worlds/Headless Player Lab/db'
+[2026-09-16 23:55:19:646 INFO] Accepting clients on [::]:19152
+[2026-09-16 23:55:19:680 INFO] Pack Stack - None
+[2026-09-16 23:55:20:624 INFO] Signed in to signaling service successfully
+[2026-09-16 23:55:20:764 INFO] Server started.
+[2026-09-16 23:55:20:764 INFO] ================ TELEMETRY MESSAGE ===================
+[2026-09-16 23:55:20:764 INFO] Server Telemetry is currently not enabled. 
+[2026-09-16 23:55:20:764 INFO] Enabling this telemetry helps us improve the game.
+[2026-09-16 23:55:20:764 INFO] 
+[2026-09-16 23:55:20:764 INFO] To enable this feature, add the line 'emit-server-telemetry=true'
+[2026-09-16 23:55:20:764 INFO] to the server.properties file in the handheld/src-server directory
+[2026-09-16 23:55:20:764 INFO] ======================================================
+[2026-09-16 23:55:22:144 INFO] Player connected: HeadlessPlayer, xuid: 
+[2026-09-16 23:55:22:150 INFO] Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[2026-09-16 23:55:24:372 INFO] Player Spawned: HeadlessPlayer xuid: , pfid: 
+[2026-09-16 23:55:24:593 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -85899345919,
+      "position" : {
+         "x" : 0.50,
+         "y" : 69.62001037597656,
+         "z" : 0.50
+      },
+      "uniqueId" : "8e5cd014-c869-3c70-a5ac-7cb3ab8418d7",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-16 23:55:29:579 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -85899345919,
+      "position" : {
+         "x" : 0.50,
+         "y" : 69.62001037597656,
+         "z" : 4.853031158447266
+      },
+      "uniqueId" : "8e5cd014-c869-3c70-a5ac-7cb3ab8418d7",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-16 23:55:32:584 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -85899345919,
+      "position" : {
+         "x" : 0.50,
+         "y" : 69.62001037597656,
+         "z" : 4.800103187561035
+      },
+      "uniqueId" : "8e5cd014-c869-3c70-a5ac-7cb3ab8418d7",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-16 23:55:35:379 INFO] Player disconnected: HeadlessPlayer, xuid: , pfid: 
+[2026-09-16 23:55:42:431 INFO] Player connected: HeadlessPlayer, xuid: 
+[2026-09-16 23:55:42:437 INFO] Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[2026-09-16 23:55:45:041 INFO] Player Spawned: HeadlessPlayer xuid: , pfid: 
+[2026-09-16 23:55:48:051 INFO] Player disconnected: HeadlessPlayer, xuid: , pfid: 
