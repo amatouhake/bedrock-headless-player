@@ -1,0 +1,23 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Local owner simulated players",
+    "description": "Accountless server-side players for a locally controlled BDS",
+    "uuid": "99d57d87-e1ee-4d64-8cb3-06b5fe18e875",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 50]
+  },
+  "modules": [
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "8dcba156-ee70-4ee3-aa11-7fedf2c58c0b",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    { "module_name": "@minecraft/server", "version": "2.3.0" },
+    { "module_name": "@minecraft/server-gametest", "version": "1.0.0-beta" }
+  ]
+}

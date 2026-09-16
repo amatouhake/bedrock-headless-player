@@ -6,10 +6,14 @@
   "main": "src/player.js",
   "scripts": {
     "start": "node src/cli.js",
+    "install:server-bot": "node scripts/install-server-side-bot.js",
     "test": "node --test"
   },
   "engines": {
     "node": ">=22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "prismarine-nbt": "^2.8.0"
+  }
 }
