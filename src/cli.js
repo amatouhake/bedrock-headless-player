@@ -36,11 +36,7 @@ async function main () {
   }
   for (const key of Object.keys(overrides)) if (overrides[key] === undefined) delete overrides[key]
   const player = new HeadlessPlayer(overrides)
-  try {
-    await player.connect()
-  } finally {
-    player.shutdown()
-  }
+  await player.connect()
 }
 
 main().catch(error => {

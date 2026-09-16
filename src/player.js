@@ -250,10 +250,6 @@ class HeadlessPlayer {
     this.client?.close()
     this.reject?.(error)
   }
-
-  shutdown () {
-    this.protocol?.cleanupNetherNet?.()
-  }
 }
 
 module.exports = { HeadlessPlayer }
