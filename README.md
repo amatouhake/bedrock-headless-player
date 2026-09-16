@@ -29,11 +29,11 @@ The old bootstrap `project/` directory had no unique committed implementation. I
 
 ## Tested revisions
 
-The protocol/data checkpoint remains on `feat/bedrock-1.26.50`; this project uses the separate investigation branch `feat/trusted-key-auth`:
+The protocol/data checkpoint remains on `feat/bedrock-1.26.50`; accountless online-server work is isolated on `investigate/online-bot-auth`:
 
 - `minecraft-data`: `7c1fe886dd92837c0550e8eff91440361c7d677f`
 - `bedrock-protocol`: `fb0af8e388127724c323fd46800e47ba004b1c55`
-- this project’s authentication branch started from the validated checkpoint `8feb3475d37b7c50e90c5ccd5fcbb2ff3c702013`
+- this project’s investigation branch started from the validated authentication checkpoint `7db421b53807732ec16dabeb1f54a3c9858bcca0`
 - Mojang reference tag: `v1.26.50`, commit `475bd72ed89036af4eb18426774ef3b953de7603`
 
 During development, `bedrock-protocol/node_modules/minecraft-data/minecraft-data` is a symlink to the adjacent `forks/minecraft-data` checkout. `scripts/setup-dev.sh` creates that link and rebuilds generated protocol data.
@@ -87,6 +87,8 @@ Useful options include `--host`, `--port`, `--username`, `--idle-before-ms`, `--
 
 Authentication and transport can be stated explicitly as `--auth offline --transport nethernet`. Current BDS 1.26.51.1 does not provide a working Microsoft-free `online-mode=true` trusted-key path, and disables RakNet player connections; requesting either combination fails early rather than changing modes. See [`AUTHENTICATION.md`](AUTHENTICATION.md) and the [live investigation evidence](evidence/2026-09-17-trusted-key-auth.md).
 
+For an accountless player on a server that keeps `online-mode=true`, the working stock-BDS option is a **server-side** GameTest `SimulatedPlayer`. The included pack supports operator-controlled spawn, walking, stopping, teleport, status, disconnect, and same-name respawn. It was live-tested on the official 1.26.51.1 server with an empty XUID and no Microsoft credential while BDS remained signed in to the normal Minecraft services. It requires the permanent Beta APIs experiment, so it is unsuitable when achievement eligibility or a non-experimental world is required. Installation and commands are in [`SERVER_SIDE_BOTS.md`](SERVER_SIDE_BOTS.md); the broader trust/configuration investigation is in [`evidence/2026-09-17-online-bot-auth-options.md`](evidence/2026-09-17-online-bot-auth-options.md).
+
 Output is JSON Lines. A successful run includes `network_settings`, `resource_packs_info`, `start_game`, `loading_screen_completed`, `spawn`, `movement_started`, `movement_stopped`, `stable`, and `disconnected_cleanly`. The `stable` record includes sent neutral/movement tick counts and server corrections.
 
 ## Reproduce the live test
@@ -109,4 +111,4 @@ npm test
 
 ## Scope
 
-The player maintains only the state needed for this lifecycle. It has no chunk/world model, pathfinding, inventory automation, crafting, combat, block search, visual perception, or Microsoft-account authentication. Movement is a fixed forward input. The 1.26.50 data changes cover the lifecycle and closely coupled wire changes exercised here; they are not a claim that every unrelated gameplay packet has been live-tested.
+The external player maintains only the state needed for its lifecycle. It has no chunk/world model, pathfinding, inventory automation, crafting, combat, block search, visual perception, or Microsoft-account authentication. Movement is a fixed forward input. The separate server-side pack is an operator control surface rather than an external protocol client or automation framework. The 1.26.50 data changes cover the lifecycle and closely coupled wire changes exercised here; they are not a claim that every unrelated gameplay packet has been live-tested.

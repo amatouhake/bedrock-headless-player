@@ -1,0 +1,106 @@
+Dedicated_Server.txt
+[2026-09-17 04:22:31:370 INFO] Starting Server
+[2026-09-17 04:22:31:370 INFO] Version: 1.26.51.1
+[2026-09-17 04:22:31:370 INFO] Session ID: d07c5e74-59b2-4036-b927-ceb1c8b795b2
+[2026-09-17 04:22:31:370 INFO] Build ID: 51061372
+[2026-09-17 04:22:31:370 INFO] Branch: r/26_u5
+[2026-09-17 04:22:31:370 INFO] Commit ID: 0559ac59aa24e42d30e238bc55cdb306232a6507
+[2026-09-17 04:22:31:370 INFO] Configuration: Publish
+[2026-09-17 04:22:31:370 INFO] Contents of server.properties: {}
+[2026-09-17 04:22:31:370 INFO] Level Name: Online Owner Bot Live
+[2026-09-17 04:22:31:370 INFO] Profiler config ('bootstrap.json') load result: success=1, errorMessage=(null)
+[2026-09-17 04:22:31:372 INFO] No CDN config file found at: cdn_config.json for dedicated server
+[2026-09-17 04:22:31:372 INFO] Game mode: 0 Survival
+[2026-09-17 04:22:31:372 INFO] Difficulty: 1 EASY
+[2026-09-17 04:22:31:374 INFO] Content logging to console is enabled.
+[2026-09-17 04:22:31:375 INFO]
+
+#####################################################
+#                                                   #
+#               LOADING VANILLA WORLD               #
+#                                                   #
+#####################################################
+[2026-09-17 04:22:31:716 INFO] Experiment(s) active: gtst
+[2026-09-17 04:22:31:716 INFO] Opening level 'worlds/Online Owner Bot Live/db'
+[2026-09-17 04:22:31:733 INFO] Accepting clients on [::]:19180
+[2026-09-17 04:22:31:755 INFO] Pack Stack - [00] Local owner simulated players (id: 99d57d87-e1ee-4d64-8cb3-06b5fe18e875, version: 1.0.0) @ development_behavior_packs/local_owner_simulated_players
+[2026-09-17 04:22:31:792 WARN] [Scripting] [OWNERBOT] ready commands=spawn,disconnect,teleport,walk,stop,status
+
+[2026-09-17 04:22:32:357 INFO] Signed in to signaling service successfully
+[2026-09-17 04:22:32:470 INFO] Waiting for Minecraft services...
+[2026-09-17 04:22:32:770 INFO] Server started.
+[2026-09-17 04:22:32:770 INFO] ================ TELEMETRY MESSAGE ===================
+[2026-09-17 04:22:32:770 INFO] Server Telemetry is currently not enabled.
+[2026-09-17 04:22:32:770 INFO] Enabling this telemetry helps us improve the game.
+[2026-09-17 04:22:32:770 INFO]
+[2026-09-17 04:22:32:770 INFO] To enable this feature, add the line 'emit-server-telemetry=true'
+[2026-09-17 04:22:32:770 INFO] to the server.properties file in the handheld/src-server directory
+[2026-09-17 04:22:32:770 INFO] ======================================================
+[2026-09-17 04:22:40:789 INFO] Script event ownerbot:spawn has been sent
+[2026-09-17 04:22:40:791 INFO] Player Spawned: WalkBot xuid: , pfid:
+[2026-09-17 04:22:40:791 WARN] [Scripting] [OWNERBOT] spawned name=WalkBot id=-17179869183 xuid=<empty> at={"z":0,"y":53,"x":0}
+
+[2026-09-17 04:22:46:272 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -17179869183,
+      "position" : {
+         "x" : 0.0,
+         "y" : 52.14494323730469,
+         "z" : 0.0
+      },
+      "uniqueId" : "b09bd2fd-0d06-4062-874c-dbfe595dbf4f",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-17 04:22:46:322 INFO] Script event ownerbot:walk has been sent
+[2026-09-17 04:22:46:343 WARN] [Scripting] [OWNERBOT] walking name=WalkBot speed=0.8 from={"z":0,"y":50.47492980957031,"x":0}
+
+[2026-09-17 04:22:55:082 INFO] Script event ownerbot:stop has been sent
+[2026-09-17 04:22:55:093 WARN] [Scripting] [OWNERBOT] stopped name=WalkBot at={"z":6.699999809265137,"y":50,"x":0}
+
+[2026-09-17 04:22:55:132 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -17179869183,
+      "position" : {
+         "x" : 0.0,
+         "y" : 51.62001037597656,
+         "z" : 6.699999809265137
+      },
+      "uniqueId" : "b09bd2fd-0d06-4062-874c-dbfe595dbf4f",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-17 04:23:01:737 INFO] Target data: [
+   {
+      "dimension" : 0,
+      "id" : -17179869183,
+      "position" : {
+         "x" : 0.0,
+         "y" : 51.62001037597656,
+         "z" : 6.699999809265137
+      },
+      "uniqueId" : "b09bd2fd-0d06-4062-874c-dbfe595dbf4f",
+      "yRot" : 0.0
+   }
+]
+
+[2026-09-17 04:23:01:787 INFO] Script event ownerbot:disconnect has been sent
+[2026-09-17 04:23:01:794 WARN] [Scripting] [OWNERBOT] disconnected name=WalkBot
+
+[2026-09-17 04:23:06:197 INFO] There are 0/10 players online:
+
+[2026-09-17 04:23:06:247 INFO] Script event ownerbot:spawn has been sent
+[2026-09-17 04:23:06:294 INFO] Player Spawned: WalkBot xuid: , pfid:
+[2026-09-17 04:23:06:294 WARN] [Scripting] [OWNERBOT] spawned name=WalkBot id=-17179869166 xuid=<empty> at={"z":0,"y":53,"x":0}
+
+[2026-09-17 04:23:10:052 INFO] There are 1/10 players online:
+WalkBot
+[2026-09-17 04:23:10:102 INFO] Script event ownerbot:disconnect has been sent
+[2026-09-17 04:23:10:144 WARN] [Scripting] [OWNERBOT] disconnected name=WalkBot
+
+[2026-09-17 04:23:10:152 INFO] Server stop requested.
+[2026-09-17 04:23:10:198 INFO] Stopping server...

@@ -1,0 +1,35 @@
+[dns-prod.log]
+[DNS_TRACE] node=client.discovery.minecraft-services.net service=443
+[2026-09-17 04:18:45:576 INFO] Signed in to signaling service successfully
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[2026-09-17 04:18:46:114 INFO] Waiting for Minecraft services...
+[2026-09-17 04:18:46:414 INFO] Server started.
+[dns-dev.log]
+[DNS_TRACE] node=client.dev-11c196f7.discovery.minecraft-services.net service=443
+[2026-09-17 04:18:47:814 INFO] Signed in to signaling service successfully
+[DNS_TRACE] node=auth.dev-568eb875.franchise.minecraft-services.net service=443
+[DNS_TRACE] node=auth.dev-568eb875.franchise.minecraft-services.net service=443
+[2026-09-17 04:18:47:920 INFO] Waiting for Minecraft services...
+[2026-09-17 04:18:48:320 INFO] Server started.
+[dns-custom-override.log]
+[DNS_TRACE] node=client.discovery.minecraft-services.net service=443
+[2026-09-17 04:18:51:235 INFO] Signed in to signaling service successfully
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[2026-09-17 04:18:51:782 INFO] Waiting for Minecraft services...
+[2026-09-17 04:18:52:083 INFO] Server started.
+[dns-flat-auth-override.log]
+[DNS_TRACE] node=client.discovery.minecraft-services.net service=443
+[2026-09-17 04:19:51:297 INFO] Signed in to signaling service successfully
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[2026-09-17 04:19:51:425 INFO] Waiting for Minecraft services...
+[2026-09-17 04:19:51:825 INFO] Server started.
+[dns-host-override.log]
+[DNS_TRACE] node=client.discovery.minecraft-services.net service=443
+[2026-09-17 04:19:52:841 INFO] Signed in to signaling service successfully
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[DNS_TRACE] node=authorization.franchise.minecraft-services.net service=443
+[2026-09-17 04:19:53:360 INFO] Waiting for Minecraft services...
+[2026-09-17 04:19:53:761 INFO] Server started.
