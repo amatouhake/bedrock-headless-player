@@ -31,9 +31,9 @@ The old bootstrap `project/` directory had no unique committed implementation. I
 
 All three writable repositories use branch `feat/bedrock-1.26.50`:
 
-- `minecraft-data`: `4e99c655` (`Add Bedrock 1.26.50 protocol 2193`)
-- `bedrock-protocol`: `9cdadae` (`Add NetherNet support for Bedrock 1.26.50`)
-- this project’s live-tested implementation: `6f5adee`
+- `minecraft-data`: `098d90ab` (`Complete Bedrock 1.26.50 schemas and palette`)
+- `bedrock-protocol`: `74e1914f` (`Harden NetherNet identity and framing`)
+- this project’s live-tested implementation: `f045ce2b`
 - Mojang reference tag: `v1.26.50`, commit `475bd72ed89036af4eb18426774ef3b953de7603`
 
 During development, `bedrock-protocol/node_modules/minecraft-data/minecraft-data` is a symlink to the adjacent `forks/minecraft-data` checkout. `scripts/setup-dev.sh` creates that link and rebuilds generated protocol data.
@@ -95,7 +95,7 @@ The single command below cold-starts BDS if needed, runs the full movement lifec
 ./scripts/live-test.sh
 ```
 
-The successful preserved run is summarized in [`evidence/2026-09-16-live-test.md`](evidence/2026-09-16-live-test.md). Its compact raw traces are retained beside the report.
+The fresh post-review run is summarized in [`evidence/2026-09-16-review-remediation.md`](evidence/2026-09-16-review-remediation.md). Its compact raw traces are retained beside the report; the original milestone evidence remains separate.
 
 Run local checks with:
 
