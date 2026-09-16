@@ -1,0 +1,28 @@
+node_modules/
+dist/
+coverage/
+.tmp/
+tmp/
+*.log
+
+# Local configuration / credentials
+.env
+.env.*
+!.env.example
+*.token
+*.secret
+
+# Authentication/profile caches must never be committed
+profiles/
+auth-cache/
+.auth/
+
+# Packet captures / binary diagnostics
+*.pcap
+*.pcapng
+*.bin
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
