@@ -11,8 +11,8 @@ $bdsPort = 19261
 $proxyPort = 19263
 
 $rules = @(
-    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = "$bdsPort,$proxyPort" },
-    @{ Name = "OwnerBotBDS-UDP"; Display = "OwnerBot BDS NetherNet UDP"; Protocol = "UDP"; Ports = "20000-20100" }
+    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = @("$bdsPort", "$proxyPort") },
+    @{ Name = "OwnerBotBDS-UDP"; Display = "OwnerBot BDS NetherNet UDP"; Protocol = "UDP"; Ports = @("20000-20100") }
 )
 
 if (-not $ListenAddress) {
