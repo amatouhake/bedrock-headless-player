@@ -1,0 +1,17 @@
+{"time":"2026-09-17T04:11:45.023Z","event":"local_ownerbot_auth","issuer":"ownerbot://local","audience":"endstone://local-ownerbot","identityId":"87036a7b-c019-5d78-a473-1a5bc9bdbed5","keyCreated":false,"variant":"valid"}
+{"time":"2026-09-17T04:11:45.023Z","event":"server_identity_pin_loaded","pin":"sha256:95ac1f1bf73ac9c42c0e142f36c215a7ee78619417a38cc3cfd4dfa437f87cc3"}
+{"time":"2026-09-17T04:11:45.048Z","event":"transport","message":"Connecting to 127.0.0.1:19261 Dedicated Server (Endstone Ownerbot 2651), version 1.26.51  (as 1.26.50)"}
+{"time":"2026-09-17T04:11:46.405Z","event":"network_settings","requestedProtocol":2193,"expectedProtocol":2193,"compression":"deflate"}
+{"time":"2026-09-17T04:11:46.428Z","event":"play_status","status":"login_success"}
+{"time":"2026-09-17T04:11:46.428Z","event":"resource_packs_info","mustAccept":false,"packCount":0}
+{"time":"2026-09-17T04:11:46.539Z","event":"start_game","runtimeEntityId":"69","position":{"x":0.5,"y":65.62001037597656,"z":5.592678070068359},"positionSource":"start-game","spawnPosition":{"x":0,"y":32767,"z":0},"serverTick":"14350","inputTick":"1","engine":"1.26.51"}
+{"time":"2026-09-17T04:11:46.539Z","event":"loading_screen_started"}
+{"time":"2026-09-17T04:11:50.476Z","event":"loading_screen_completed"}
+{"time":"2026-09-17T04:11:50.476Z","event":"spawn","position":{"x":0.5,"y":65.62001037597656,"z":5.592678070068359}}
+{"time":"2026-09-17T04:11:50.476Z","event":"play_status","status":"player_spawn"}
+{"time":"2026-09-17T04:11:50.977Z","event":"movement_started","position":{"x":0.5,"y":65.62001037597656,"z":5.592678070068359}}
+{"time":"2026-09-17T04:11:51.138Z","event":"movement_correction","tick":"13","position":{"x":0.5,"y":65.62001037597656,"z":5.699999809265137}}
+{"time":"2026-09-17T04:11:51.438Z","event":"movement_correction","tick":"19","position":{"x":0.5,"y":65.62001037597656,"z":5.699999809265137}}
+{"time":"2026-09-17T04:11:51.478Z","event":"movement_stopped","position":{"x":0.5,"y":65.62001037597656,"z":5.699999809265137}}
+{"time":"2026-09-17T04:11:52.478Z","event":"stable","position":{"x":0.5,"y":65.62001037597656,"z":5.699999809265137},"corrections":2,"sentTicks":39,"neutralTicks":29,"movementTicks":10,"postStopDisplacement":0,"durationMs":2000}
+{"time":"2026-09-17T04:11:52.479Z","event":"disconnected_cleanly"}

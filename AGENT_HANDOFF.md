@@ -5,7 +5,7 @@ The first headless-player milestone and its review remediation are complete and 
 ## Current state
 
 - Canonical repository: `/home/kenke/bedrock-fake-player-lab/bedrock-headless-player`
-- Project branch: `investigate/online-bot-auth`; both PrismarineJS forks remain on `feat/bedrock-1.26.50`
+- Project branch: `investigate/endstone-local-trust`; both PrismarineJS forks remain on `feat/bedrock-1.26.50`
 - Official server tested: BDS 1.26.51.1, build 51061372
 - Negotiated schema: Bedrock 1.26.50, protocol 2193
 - `minecraft-data`: `7c1fe886dd92837c0550e8eff91440361c7d677f`
@@ -25,10 +25,12 @@ The separate `feat/trusted-key-auth` investigation found no Microsoft-free onlin
 
 The `investigate/online-bot-auth` phase found no stock additive Login issuer or working auth-service override. It did produce a practical accountless option for a controlled server: an experimental GameTest `SimulatedPlayer` pack. The installer refuses offline mode, backs up and patches `level.dat`, and installs the pack idempotently. Official BDS 1.26.51.1 live evidence proves empty-XUID spawn, server-observed walking, stopping at a stable position, disconnect and same-name respawn while `online-mode=true`. Read `SERVER_SIDE_BOTS.md` and `evidence/2026-09-17-online-bot-auth-options.md` before changing this area.
 
+The `investigate/endstone-local-trust` phase produced the first external accountless online-mode path. Endstone `v0.11` base `9066c3cc` was built and validated on BDS 1.26.51.1, then the local branch `investigate/local-ownerbot-auth` added a narrow ES384 owner-issuer route at `_validateLoginPacket`. Final Endstone commit `68ccf906` passed 232/232 tests. The project emits short-lived owner tokens bound to the NetherNet/client-data `cpk`, uses stable local UUIDs, and never asserts a Microsoft XUID. The full lifecycle, reconnect, negative controls, non-experimental world state, and 1/5/10-client runs passed. Read `ENDSTONE_LOCAL_TRUST.md` and `evidence/2026-09-17-endstone-local-trust.md` before operating or changing this experiment.
+
 ## Operational notes
 
 Use `scripts/setup-dev.sh` after changing either fork. Use `scripts/live-test.sh` for the complete cold integration test. It owns server cleanup only when it starts the server itself. Runtime server files belong under `server/` and `tmp/`, never in this repository.
 
-The external-client integration server deliberately has `online-mode=false`; keep it local. The separate server-side-bot setup requires `online-mode=true` and Beta APIs. The managed server rotates its self-signed key at process start; `start-server.sh` resets the loopback TOFU pin then, while reconnects to the same process must match the saved pin. No Microsoft credentials or authentication caches are needed or stored for either local test.
+The original external-client integration server deliberately has `online-mode=false`; keep it local. The separate server-side-bot setup requires `online-mode=true` and Beta APIs. The Endstone local-ownerbot setup also keeps `online-mode=true` but requires the experimental runtime hook and no Beta APIs. The managed server rotates its self-signed key at process start; reset a loopback test pin only on a deliberate restart, while reconnects to the same process must match the saved pin. No Microsoft credentials or authentication caches are needed for the local-ownerbot path.
 
 Keep future work narrow. Add protocol fixes to `minecraft-data`, transport/session fixes to `bedrock-protocol`, and player behavior here. The project deliberately excludes world modeling, pathfinding, inventory automation, crafting, combat, and public-server compatibility work.

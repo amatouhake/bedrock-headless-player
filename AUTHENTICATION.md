@@ -1,6 +1,6 @@
 # Authentication boundary on BDS 1.26.51.1
 
-The current headless player deliberately supports `--auth offline --transport nethernet` for the local test server. It rejects `trusted-key` and RakNet explicitly. This is based on live tests against official Linux BDS 1.26.51.1 (build 51061372, protocol 2193), rather than on the historical behavior of the property.
+The headless player supports explicit `offline` and experimental `local-ownerbot` modes over NetherNet. It rejects `trusted-key` and RakNet explicitly. These decisions are based on live tests against official Linux BDS 1.26.51.1 (build 51061372, protocol 2193), rather than on historical property behavior.
 
 ## Current result
 
@@ -9,7 +9,9 @@ The current headless player deliberately supports `--auth offline --transport ne
 | NetherNet | Full lifecycle live-tested | Signaling, DTLS, and protocol negotiation succeed; BDS rejects the Login packet | Not live-tested in this project |
 | RakNet | Unavailable in this BDS release | Unavailable in this BDS release | Unavailable in this BDS release |
 
-For **external** players, this remains the current result. A later, broader investigation also tested hidden service configuration, fixed service environments, candidate service overrides, and the script join gate; none added a second trusted client issuer. See [`evidence/2026-09-17-online-bot-auth-options.md`](evidence/2026-09-17-online-bot-auth-options.md).
+For **stock BDS**, this remains the current result. A broader investigation also tested hidden service configuration, fixed service environments, candidate service overrides, and the script join gate; none added a second trusted client issuer. See [`evidence/2026-09-17-online-bot-auth-options.md`](evidence/2026-09-17-online-bot-auth-options.md).
+
+The Endstone experiment adds the missing trust point as a narrow BDS runtime hook. With `--auth local-ownerbot --transport nethernet`, a short-lived ES384 token under the server owner's configured key was live-accepted with `online-mode=true`, an empty Microsoft XUID, no experiments, and the full spawn/movement/reconnect lifecycle. All other issuers still enter the stock Microsoft validator. This is an explicit server modification rather than a newly discovered `trusted-key` behavior; see [`ENDSTONE_LOCAL_TRUST.md`](ENDSTONE_LOCAL_TRUST.md).
 
 For the self-hosted-server use case, stock BDS does have an accountless path that does not weaken network authentication: create a GameTest `SimulatedPlayer` inside the server. The actor has no XUID or network session, while ordinary clients still face `online-mode=true`. The included implementation and live commands are documented in [`SERVER_SIDE_BOTS.md`](SERVER_SIDE_BOTS.md). This option requires the permanent Beta APIs experiment and should not be used where achievement eligibility must remain intact.
 

@@ -1,0 +1,16 @@
+{"time":"2026-09-17T04:16:16.548Z","event":"local_ownerbot_auth","issuer":"ownerbot://local","audience":"endstone://local-ownerbot","identityId":"3b3fe584-6397-5e0c-b638-032a88ee632c","keyCreated":false,"variant":"valid"}
+{"time":"2026-09-17T04:16:16.549Z","event":"server_identity_pin_loaded","pin":"sha256:95ac1f1bf73ac9c42c0e142f36c215a7ee78619417a38cc3cfd4dfa437f87cc3"}
+{"time":"2026-09-17T04:16:16.572Z","event":"transport","message":"Connecting to 127.0.0.1:19261 Dedicated Server (Endstone Ownerbot 2651), version 1.26.51  (as 1.26.50)"}
+{"time":"2026-09-17T04:16:17.949Z","event":"network_settings","requestedProtocol":2193,"expectedProtocol":2193,"compression":"deflate"}
+{"time":"2026-09-17T04:16:17.972Z","event":"play_status","status":"login_success"}
+{"time":"2026-09-17T04:16:17.973Z","event":"resource_packs_info","mustAccept":false,"packCount":0}
+{"time":"2026-09-17T04:16:18.083Z","event":"start_game","runtimeEntityId":"166","position":{"x":0.5,"y":32769.62109375,"z":0.5},"positionSource":"start-game","spawnPosition":{"x":0,"y":32767,"z":0},"serverTick":"19682","inputTick":"1","engine":"1.26.51"}
+{"time":"2026-09-17T04:16:18.084Z","event":"loading_screen_started"}
+{"time":"2026-09-17T04:16:22.549Z","event":"loading_screen_completed"}
+{"time":"2026-09-17T04:16:22.550Z","event":"spawn","position":{"x":0.5,"y":32769.62109375,"z":0.5}}
+{"time":"2026-09-17T04:16:22.550Z","event":"play_status","status":"player_spawn"}
+{"time":"2026-09-17T04:16:22.872Z","event":"movement_correction","tick":"6","position":{"x":0.5,"y":65.62001037597656,"z":0.5}}
+{"time":"2026-09-17T04:16:23.049Z","event":"movement_started","position":{"x":0.5,"y":65.62001037597656,"z":0.5}}
+{"time":"2026-09-17T04:16:23.550Z","event":"movement_stopped","position":{"x":0.5,"y":65.62001037597656,"z":2.65}}
+{"time":"2026-09-17T04:16:24.549Z","event":"stable","position":{"x":0.5,"y":65.62001037597656,"z":2.65},"corrections":1,"sentTicks":39,"neutralTicks":29,"movementTicks":10,"postStopDisplacement":0,"durationMs":2000}
+{"time":"2026-09-17T04:16:24.551Z","event":"disconnected_cleanly"}

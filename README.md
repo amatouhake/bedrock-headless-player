@@ -29,11 +29,12 @@ The old bootstrap `project/` directory had no unique committed implementation. I
 
 ## Tested revisions
 
-The protocol/data checkpoint remains on `feat/bedrock-1.26.50`; accountless online-server work is isolated on `investigate/online-bot-auth`:
+The protocol/data checkpoint remains on `feat/bedrock-1.26.50`; the Endstone external local-trust experiment is isolated on `investigate/endstone-local-trust`:
 
 - `minecraft-data`: `7c1fe886dd92837c0550e8eff91440361c7d677f`
 - `bedrock-protocol`: `fb0af8e388127724c323fd46800e47ba004b1c55`
-- this project’s investigation branch started from the validated authentication checkpoint `7db421b53807732ec16dabeb1f54a3c9858bcca0`
+- this project’s branch started from the validated online-auth investigation checkpoint `d3d15db0c2976a3f0d7535598697014c12a3ec56`
+- Endstone experiment: base `9066c3cc1f37fb0f5df6a73aec2a9b7310fc4451`, final local commit `68ccf906de0d81442de3df4217319de13b32703c`
 - Mojang reference tag: `v1.26.50`, commit `475bd72ed89036af4eb18426774ef3b953de7603`
 
 During development, `bedrock-protocol/node_modules/minecraft-data/minecraft-data` is a symlink to the adjacent `forks/minecraft-data` checkout. `scripts/setup-dev.sh` creates that link and rebuilds generated protocol data.
@@ -87,7 +88,9 @@ Useful options include `--host`, `--port`, `--username`, `--idle-before-ms`, `--
 
 Authentication and transport can be stated explicitly as `--auth offline --transport nethernet`. Current BDS 1.26.51.1 does not provide a working Microsoft-free `online-mode=true` trusted-key path, and disables RakNet player connections; requesting either combination fails early rather than changing modes. See [`AUTHENTICATION.md`](AUTHENTICATION.md) and the [live investigation evidence](evidence/2026-09-17-trusted-key-auth.md).
 
-For an accountless player on a server that keeps `online-mode=true`, the working stock-BDS option is a **server-side** GameTest `SimulatedPlayer`. The included pack supports operator-controlled spawn, walking, stopping, teleport, status, disconnect, and same-name respawn. It was live-tested on the official 1.26.51.1 server with an empty XUID and no Microsoft credential while BDS remained signed in to the normal Minecraft services. It requires the permanent Beta APIs experiment, so it is unsuitable when achievement eligibility or a non-experimental world is required. Installation and commands are in [`SERVER_SIDE_BOTS.md`](SERVER_SIDE_BOTS.md); the broader trust/configuration investigation is in [`evidence/2026-09-17-online-bot-auth-options.md`](evidence/2026-09-17-online-bot-auth-options.md).
+For an accountless **external** player on a controlled server that keeps `online-mode=true`, the experimental Endstone local-ownerbot hook adds a separate ES384 server-owner trust root. It was live-tested on BDS 1.26.51.1 with `allow-cheats=false`, no experiments, preserved level eligibility flags, full movement/reconnect, rejection controls, and 10 concurrent bots. Ordinary non-local identities still enter the original BDS Microsoft validator. Setup, security limits, and exact revisions are in [`ENDSTONE_LOCAL_TRUST.md`](ENDSTONE_LOCAL_TRUST.md); the [live evidence report](evidence/2026-09-17-endstone-local-trust.md) includes the standalone-hook assessment.
+
+The stock-BDS alternative remains a **server-side** GameTest `SimulatedPlayer`. The included pack supports operator-controlled spawn, walking, stopping, teleport, status, disconnect, and same-name respawn, but it requires the permanent Beta APIs experiment and is unsuitable when achievement eligibility or a non-experimental world is required. Installation and commands are in [`SERVER_SIDE_BOTS.md`](SERVER_SIDE_BOTS.md); the broader stock-configuration investigation is in [`evidence/2026-09-17-online-bot-auth-options.md`](evidence/2026-09-17-online-bot-auth-options.md).
 
 Output is JSON Lines. A successful run includes `network_settings`, `resource_packs_info`, `start_game`, `loading_screen_completed`, `spawn`, `movement_started`, `movement_stopped`, `stable`, and `disconnected_cleanly`. The `stable` record includes sent neutral/movement tick counts and server corrections.
 

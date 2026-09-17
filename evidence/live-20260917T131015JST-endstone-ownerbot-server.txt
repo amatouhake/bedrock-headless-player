@@ -1,0 +1,146 @@
+[13:10:15] [Main/INFO]: Version: 1.26.51.1
+[13:10:15] [Main/INFO]: Build ID: 51061372
+[13:10:15] [Main/INFO]: Branch: r/26_u5
+[13:10:15] [Main/INFO]: Commit ID: 0559ac59aa24e42d30e238bc55cdb306232a6507
+[13:10:15] [Main/INFO]: Configuration: Publish
+[13:10:15] [Main/INFO]: Game mode: 0 Survival
+[13:10:15] [Main/INFO]: Difficulty: 1 EASY
+[13:10:15] [Main/INFO]: This server is running Endstone version: 0.11.10 (Minecraft: 26.51)
+[13:10:16] [Main/INFO]: Accepting clients on [::]:19261
+[13:10:16] [Main/INFO]: Pack Stack - None
+[13:10:16] [Main/INFO]: Signed in to signaling service successfully
+[13:10:16] [Main/INFO]: Waiting for Minecraft services...
+[13:10:17] [Main/INFO]: Server started.
+[13:10:35] [Server/INFO]: Local ownerbot authentication is enabled for issuer 'ownerbot://local'.
+[13:10:35] [Server/INFO]: Accepted local ownerbot 'OwnerBotEvidence' (87036a7b-c019-5d78-a473-1a5bc9bdbed5) from issuer 'ownerbot://local'.
+[13:10:35] [Server/INFO]: Player connected: OwnerBotEvidence, xuid: 
+[13:10:37] [Server/INFO]: Player Spawned: OwnerBotEvidence xuid: , pfid: 
+[13:10:37] [Server/INFO]: OwnerBotEvidence joined the game
+[13:10:37] [Server/INFO]: Target data: [
+[13:10:37] [Server/INFO]:       "dimension" : 0,
+[13:10:37] [Server/INFO]:       "position" : {
+[13:10:37] [Server/INFO]:          "x" : 0.50,
+[13:10:37] [Server/INFO]:          "y" : 65.62001037597656,
+[13:10:37] [Server/INFO]:          "z" : 0.50
+[13:10:37] [Server/INFO]:       "uniqueId" : "87036a7b-c019-5d78-a473-1a5bc9bdbed5",
+[13:10:50] [Server/INFO]: Player disconnected: OwnerBotEvidence, xuid: , pfid: 
+[13:10:50] [Server/INFO]: OwnerBotEvidence left the game
+[13:11:04] [Server/INFO]: Accepted local ownerbot 'MovementProbe' (1ed87477-e338-55aa-b447-a1bf7b6302e5) from issuer 'ownerbot://local'.
+[13:11:04] [Server/INFO]: Player connected: MovementProbe, xuid: 
+[13:11:07] [Server/INFO]: Player Spawned: MovementProbe xuid: , pfid: 
+[13:11:07] [Server/INFO]: MovementProbe joined the game
+[13:11:15] [Server/INFO]: Target data: [
+[13:11:15] [Server/INFO]:       "dimension" : 0,
+[13:11:15] [Server/INFO]:       "position" : {
+[13:11:15] [Server/INFO]:          "x" : 0.50,
+[13:11:15] [Server/INFO]:          "y" : 65.62001037597656,
+[13:11:15] [Server/INFO]:          "z" : 5.699999809265137
+[13:11:15] [Server/INFO]:       "uniqueId" : "1ed87477-e338-55aa-b447-a1bf7b6302e5",
+[13:11:28] [Server/INFO]: Player disconnected: MovementProbe, xuid: , pfid: 
+[13:11:28] [Server/INFO]: MovementProbe left the game
+[13:11:46] [Server/INFO]: Accepted local ownerbot 'OwnerBotEvidence' (87036a7b-c019-5d78-a473-1a5bc9bdbed5) from issuer 'ownerbot://local'.
+[13:11:46] [Server/INFO]: Player connected: OwnerBotEvidence, xuid: 
+[13:11:50] [Server/INFO]: Player Spawned: OwnerBotEvidence xuid: , pfid: 
+[13:11:50] [Server/INFO]: OwnerBotEvidence joined the game
+[13:11:52] [Server/INFO]: Player disconnected: OwnerBotEvidence, xuid: , pfid: 
+[13:11:52] [Server/INFO]: OwnerBotEvidence left the game
+[13:12:28] [Server/INFO]: Accepted local ownerbot 'Batch5Bot3' (1cb15f0e-d8ae-52c5-8bfe-97d5f723a642) from issuer 'ownerbot://local'.
+[13:12:28] [Server/INFO]: Player connected: Batch5Bot3, xuid: 
+[13:12:28] [Server/INFO]: Accepted local ownerbot 'Batch5Bot4' (8c160b2f-543b-5f37-a76b-f68b3dadba15) from issuer 'ownerbot://local'.
+[13:12:28] [Server/INFO]: Player connected: Batch5Bot4, xuid: 
+[13:12:28] [Server/INFO]: Accepted local ownerbot 'Batch5Bot1' (9304868a-bb17-5ed1-b437-1b5e25ce56ee) from issuer 'ownerbot://local'.
+[13:12:28] [Server/INFO]: Player connected: Batch5Bot1, xuid: 
+[13:12:28] [Server/INFO]: Accepted local ownerbot 'Batch5Bot2' (dc77ee29-954f-5de0-aa59-190356bcf1db) from issuer 'ownerbot://local'.
+[13:12:28] [Server/INFO]: Player connected: Batch5Bot2, xuid: 
+[13:12:28] [Server/INFO]: Accepted local ownerbot 'Batch5Bot5' (05581ee7-c6df-54d4-8145-9ed6eb62acc9) from issuer 'ownerbot://local'.
+[13:12:28] [Server/INFO]: Player connected: Batch5Bot5, xuid: 
+[13:12:34] [Server/INFO]: Player Spawned: Batch5Bot3 xuid: , pfid: 
+[13:12:34] [Server/INFO]: Player Spawned: Batch5Bot4 xuid: , pfid: 
+[13:12:34] [Server/INFO]: Player Spawned: Batch5Bot2 xuid: , pfid: 
+[13:12:34] [Server/INFO]: Player Spawned: Batch5Bot5 xuid: , pfid: 
+[13:12:34] [Server/INFO]: Player Spawned: Batch5Bot1 xuid: , pfid: 
+[13:12:34] [Server/INFO]: Batch5Bot4 joined the game
+[13:12:34] [Server/INFO]: Batch5Bot1 joined the game
+[13:12:34] [Server/INFO]: Batch5Bot2 joined the game
+[13:12:34] [Server/INFO]: Batch5Bot5 joined the game
+[13:12:34] [Server/INFO]: Batch5Bot3 joined the game
+[13:12:45] [Server/INFO]: Player disconnected: Batch5Bot3, xuid: , pfid: 
+[13:12:45] [Server/INFO]: Batch5Bot3 left the game
+[13:12:45] [Server/INFO]: Player disconnected: Batch5Bot2, xuid: , pfid: 
+[13:12:45] [Server/INFO]: Batch5Bot2 left the game
+[13:12:45] [Server/INFO]: Player disconnected: Batch5Bot5, xuid: , pfid: 
+[13:12:45] [Server/INFO]: Batch5Bot5 left the game
+[13:12:45] [Server/INFO]: Player disconnected: Batch5Bot4, xuid: , pfid: 
+[13:12:45] [Server/INFO]: Batch5Bot4 left the game
+[13:12:45] [Server/INFO]: Player disconnected: Batch5Bot1, xuid: , pfid: 
+[13:12:45] [Server/INFO]: Batch5Bot1 left the game
+[13:12:57] [Server/INFO]: There are 0/20 players online:
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot4' (45e375de-c565-55da-a7ca-d1dd4968f203) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot6' (81bd7a92-89e8-512e-93cd-2c27f9b5e911) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot10' (6e256c3e-190c-5064-9cf7-dc99922b9016) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot5' (beee89a6-b49b-57c9-b308-ba3d999b60ce) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot8' (cc8b0bbe-4079-5ed6-9d10-1a7deb39ef1c) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot7' (2ab42228-03de-5f31-b7ac-630bef64df95) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot4, xuid: 
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot6, xuid: 
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot5, xuid: 
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot8, xuid: 
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot7, xuid: 
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot10, xuid: 
+[13:14:06] [Server/INFO]: Accepted local ownerbot 'Batch10Bot2' (9f4cd0c1-09e6-51ca-a9ef-71a65d16955b) from issuer 'ownerbot://local'.
+[13:14:06] [Server/INFO]: Player connected: Batch10Bot2, xuid: 
+[13:14:07] [Server/INFO]: Accepted local ownerbot 'Batch10Bot9' (852caf9d-b377-554f-926c-7759d9ba2e50) from issuer 'ownerbot://local'.
+[13:14:07] [Server/INFO]: Player connected: Batch10Bot9, xuid: 
+[13:14:07] [Server/INFO]: Accepted local ownerbot 'Batch10Bot1' (b31e2a68-4c1b-5fcb-b498-12d1d788a9bc) from issuer 'ownerbot://local'.
+[13:14:07] [Server/INFO]: Player connected: Batch10Bot1, xuid: 
+[13:14:08] [Server/INFO]: Accepted local ownerbot 'Batch10Bot3' (e0434008-1f13-50dc-8c25-187db69be0fb) from issuer 'ownerbot://local'.
+[13:14:08] [Server/INFO]: Player connected: Batch10Bot3, xuid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot9 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot7 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot8 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot1 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot5 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot6 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot2 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot4 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Player Spawned: Batch10Bot10 xuid: , pfid: 
+[13:14:17] [Server/INFO]: Batch10Bot4 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot6 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot10 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot5 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot8 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot2 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot9 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot1 joined the game
+[13:14:17] [Server/INFO]: Batch10Bot7 joined the game
+[13:14:18] [Server/INFO]: Player Spawned: Batch10Bot3 xuid: , pfid: 
+[13:14:18] [Server/INFO]: Batch10Bot3 joined the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot4, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot4 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot10, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot10 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot9, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot9 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot1, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot1 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot7, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot7 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot5, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot5 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot6, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot6 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot8, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot8 left the game
+[13:14:30] [Server/INFO]: Player disconnected: Batch10Bot2, xuid: , pfid: 
+[13:14:30] [Server/INFO]: Batch10Bot2 left the game
+[13:14:31] [Server/INFO]: Player disconnected: Batch10Bot3, xuid: , pfid: 
+[13:14:31] [Server/INFO]: Batch10Bot3 left the game
+[13:14:34] [Server/INFO]: There are 0/20 players online:
+[13:16:17] [Server/INFO]: Accepted local ownerbot 'PostCleanupBot' (3b3fe584-6397-5e0c-b638-032a88ee632c) from issuer 'ownerbot://local'.
+[13:16:17] [Server/INFO]: Player connected: PostCleanupBot, xuid: 
+[13:16:22] [Server/INFO]: Player Spawned: PostCleanupBot xuid: , pfid: 
+[13:16:22] [Server/INFO]: PostCleanupBot joined the game
+[13:16:24] [Server/INFO]: Player disconnected: PostCleanupBot, xuid: , pfid: 
+[13:16:24] [Server/INFO]: PostCleanupBot left the game
+[13:16:53] [Server/INFO]: Server stop requested.
+[13:16:53] [Main/INFO]: Stopping server...
