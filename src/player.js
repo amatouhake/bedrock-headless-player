@@ -74,6 +74,7 @@ class HeadlessPlayer {
     this.dead = false
     this.respawnPending = false
     this.respawnReadySent = false
+    this.spawned = false
   }
 
   log (event, data = {}) {
@@ -207,6 +208,7 @@ class HeadlessPlayer {
       if (!this.disconnecting) this.fail(new Error(`Connection closed unexpectedly: ${reason || 'no reason'}`))
     })
     this.client.once('spawn', () => {
+      this.spawned = true
       this.client.queue('serverbound_loading_screen', { type: 2 })
       this.log('loading_screen_completed')
       this.runLifecycle()
@@ -314,6 +316,12 @@ class HeadlessPlayer {
     this.finishDemo()
     this.airborne = false
     this.verticalVelocity = 0
+    this.sendRespawnAction('request')
+    this.log('respawn_requested', { source, runtimeEntityId: String(this.client.entityId) })
+    return true
+  }
+
+  sendRespawnAction (phase) {
     this.client.queue('player_action', {
       runtime_entity_id: this.client.entityId,
       action: 'respawn',
@@ -321,8 +329,7 @@ class HeadlessPlayer {
       result_position: { x: 0, y: 0, z: 0 },
       face: -1
     })
-    this.log('respawn_requested', { source, runtimeEntityId: String(this.client.entityId) })
-    return true
+    this.log('respawn_action_sent', { phase, runtimeEntityId: String(this.client.entityId) })
   }
 
   handleRespawn (packet) {
@@ -352,6 +359,7 @@ class HeadlessPlayer {
     this.airborne = false
     this.verticalVelocity = 0
     this.dead = false
+    if (this.respawnPending && this.spawned) this.sendRespawnAction('finalize')
     this.log('respawn_completed', { position: copyPosition(this.position) })
     return true
   }
