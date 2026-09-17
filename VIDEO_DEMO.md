@@ -19,10 +19,12 @@ powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedr
 ```
 
 The helper permits TCP 19261 and UDP 20000-20100 only from
-`192.168.1.0/24`. It also forwards the Windows LAN address on TCP 19261 to the
-working WSL localhost signaling endpoint; NetherNet WebRTC traffic continues
-directly over UDP. Connect the Windows Minecraft client to `192.168.1.5` port
-`19261`. Pass `-Remove` later to delete the firewall rules and TCP proxy.
+`192.168.1.0/24`. It forwards the Windows LAN address on TCP 19263 to the
+working WSL localhost signaling endpoint on TCP 19261; the distinct public
+port avoids a mirrored-networking bind conflict with BDS. NetherNet WebRTC
+traffic continues directly over UDP. Connect the Windows Minecraft client to
+`192.168.1.5` port `19263`. Pass `-Remove` later to delete the firewall rules
+and TCP proxy.
 Linux-side automation cannot approve the Windows UAC prompt.
 
 Start the server and ten persistent clients with:

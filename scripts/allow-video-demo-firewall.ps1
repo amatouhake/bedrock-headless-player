@@ -7,8 +7,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+$bdsPort = 19261
+$proxyPort = 19263
+
 $rules = @(
-    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = "19261" },
+    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = "$proxyPort" },
     @{ Name = "OwnerBotBDS-UDP"; Display = "OwnerBot BDS NetherNet UDP"; Protocol = "UDP"; Ports = "20000-20100" }
 )
 
@@ -29,12 +32,6 @@ if (-not $ListenAddress) {
 }
 
 $netsh = Join-Path $env:SystemRoot "System32\netsh.exe"
-$portProxyArguments = @(
-    "v4tov4",
-    "listenaddress=$ListenAddress",
-    "listenport=19261",
-    "protocol=tcp"
-)
 
 if (-not $Remove) {
     $wslCreatorIds = @(
@@ -57,44 +54,48 @@ foreach ($rule in $rules) {
         continue
     }
 
-    if (-not (Get-NetFirewallRule -DisplayName $rule.Display -ErrorAction SilentlyContinue)) {
-        New-NetFirewallRule `
-            -DisplayName $rule.Display `
-            -Direction Inbound `
-            -Action Allow `
-            -Protocol $rule.Protocol `
-            -LocalPort $rule.Ports `
-            -RemoteAddress $LanSubnet `
-            -Profile Any `
-            -ErrorAction Stop | Out-Null
-    }
+    # Recreate our narrowly named rules so rerunning the helper also reconciles
+    # port or subnet changes from an earlier version.
+    Get-NetFirewallRule -DisplayName $rule.Display -ErrorAction SilentlyContinue | Remove-NetFirewallRule -ErrorAction Stop
+    New-NetFirewallRule `
+        -DisplayName $rule.Display `
+        -Direction Inbound `
+        -Action Allow `
+        -Protocol $rule.Protocol `
+        -LocalPort $rule.Ports `
+        -RemoteAddress $LanSubnet `
+        -Profile Any `
+        -ErrorAction Stop | Out-Null
 
-    if (-not (Get-NetFirewallHyperVRule -Name $rule.Name -ErrorAction SilentlyContinue)) {
-        New-NetFirewallHyperVRule `
-            -Name $rule.Name `
-            -DisplayName $rule.Display `
-            -Direction Inbound `
-            -Action Allow `
-            -Protocol $rule.Protocol `
-            -LocalPorts $rule.Ports `
-            -RemoteAddresses $LanSubnet `
-            -VMCreatorId $wslCreatorId `
-            -ErrorAction Stop | Out-Null
-    }
+    Get-NetFirewallHyperVRule -Name $rule.Name -ErrorAction SilentlyContinue | Remove-NetFirewallHyperVRule -ErrorAction Stop
+    New-NetFirewallHyperVRule `
+        -Name $rule.Name `
+        -DisplayName $rule.Display `
+        -Direction Inbound `
+        -Action Allow `
+        -Protocol $rule.Protocol `
+        -LocalPorts $rule.Ports `
+        -RemoteAddresses $LanSubnet `
+        -VMCreatorId $wslCreatorId `
+        -ErrorAction Stop | Out-Null
 }
 
 if ($Remove) {
-    & $netsh interface portproxy delete @portProxyArguments | Out-Null
+    foreach ($listenPort in @($bdsPort, $proxyPort)) {
+        & $netsh interface portproxy delete v4tov4 listenaddress=$ListenAddress listenport=$listenPort protocol=tcp | Out-Null
+    }
     Write-Host "Removed OwnerBot BDS firewall rules."
 } else {
     # In WSL mirrored mode, Windows localhost forwarding works while connecting
-    # to the host's own LAN address can time out. Minecraft needs a non-loopback
-    # address for the NetherNet signaling request, so proxy only that TCP port
-    # back to the working localhost endpoint. WebRTC remains direct over UDP.
-    & $netsh interface portproxy delete @portProxyArguments | Out-Null
-    & $netsh interface portproxy add @portProxyArguments connectaddress=127.0.0.1 connectport=19261 | Out-Null
+    # to the host's own LAN address can time out. The WSL listener also reserves
+    # its port in the shared namespace, so use a distinct Windows-side port and
+    # proxy it to the working localhost endpoint. WebRTC remains direct over UDP.
+    foreach ($listenPort in @($bdsPort, $proxyPort)) {
+        & $netsh interface portproxy delete v4tov4 listenaddress=$ListenAddress listenport=$listenPort protocol=tcp | Out-Null
+    }
+    & $netsh interface portproxy add v4tov4 listenaddress=$ListenAddress listenport=$proxyPort protocol=tcp connectaddress=127.0.0.1 connectport=$bdsPort | Out-Null
     if ($LASTEXITCODE -ne 0) {
-        throw "Failed to create the TCP 19261 portproxy for $ListenAddress."
+        throw "Failed to create the TCP $proxyPort portproxy for $ListenAddress."
     }
 
     foreach ($rule in $rules) {
@@ -106,16 +107,22 @@ if ($Remove) {
         }
     }
 
-    $portProxyListener = Get-NetTCPConnection `
-        -State Listen `
-        -LocalAddress $ListenAddress `
-        -LocalPort 19261 `
-        -ErrorAction SilentlyContinue
+    $portProxyListener = $null
+    for ($attempt = 0; $attempt -lt 20 -and -not $portProxyListener; $attempt++) {
+        $portProxyListener = Get-NetTCPConnection `
+            -State Listen `
+            -LocalAddress $ListenAddress `
+            -LocalPort $proxyPort `
+            -ErrorAction SilentlyContinue
+        if (-not $portProxyListener) {
+            Start-Sleep -Milliseconds 100
+        }
+    }
     if (-not $portProxyListener) {
-        throw "TCP portproxy was configured but is not listening on ${ListenAddress}:19261."
+        throw "TCP portproxy was configured but is not listening on ${ListenAddress}:$proxyPort."
     }
 
-    Write-Host "Allowed BDS TCP 19261 and UDP 20000-20100 from $LanSubnet."
+    Write-Host "Allowed BDS signaling TCP $proxyPort and WebRTC UDP 20000-20100 from $LanSubnet."
     Write-Host "WSL Hyper-V VM creator ID: $wslCreatorId"
-    Write-Host "Forwarding ${ListenAddress}:19261 to the WSL localhost signaling endpoint."
+    Write-Host "Forwarding ${ListenAddress}:$proxyPort to 127.0.0.1:$bdsPort."
 }
