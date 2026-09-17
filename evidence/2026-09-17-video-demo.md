@@ -8,8 +8,8 @@
   `37b395378d91d6d20f1c52bf9d79dbd20e152458`
 - Endstone local-auth branch: `investigate/local-ownerbot-auth-v0.11.11`,
   commit `0d677f9d33c8a465266e03672d0fdf82f2a42038`
-- Headless-player branch: `investigate/endstone-local-trust`; demo
-  implementation commit `53ca8df`
+- Headless-player branch: `investigate/endstone-local-trust`; current demo
+  implementation commit `b71890babd23dfafaeb2326f1feae8cd140d2543`
 - Unchanged `bedrock-protocol`: `fb0af8e388127724c323fd46800e47ba004b1c55`
 - Unchanged `minecraft-data`: `7c1fe886dd92837c0550e8eff91440361c7d677f`
 
@@ -18,9 +18,10 @@
 - Endstone C++ suite: 232/232 passed.
 - Endstone Python suite: 107/107 passed, including preservation of an
   operator-supplied `LD_LIBRARY_PATH` in the Linux launcher.
-- `bedrock-headless-player`: 21/21 passed. New coverage serializes the actual
+- `bedrock-headless-player`: 22/22 passed. Coverage serializes the actual
   protocol-2193 chat packet, checks vertical-only jump input, exact trigger
-  matching, bot-source rejection, and reentrancy.
+  matching, bot-source rejection, reentrancy, and the complete death/respawn
+  packet handshake including duplicate-notification suppression.
 
 ## World and server state
 
@@ -48,7 +49,7 @@ achievement has been unlocked. That remains the user's manual test.
 
 ## Fresh live result
 
-The final server run started at 18:04:24 JST. `OwnerBot01` through
+The current server run started at 18:54:21 JST. `OwnerBot01` through
 `OwnerBot10` each followed the separate ES384 local-ownerbot validator,
 connected with an empty XUID, received StartGame, spawned, and entered
 persistent input ticking. Their stable local UUIDs are distinct.
@@ -64,9 +65,14 @@ messages `bots` and `Bots`, 13 seconds apart. On both cycles:
 - the second trigger proves the cooldown cleared;
 - `DemoDirector` disconnected cleanly, leaving exactly the ten named bots.
 
-The final service check found BDS and all ten bot units `active/running`.
-Observed unit main PIDs were BDS launcher 1059100 and bots 1059234, 1059352,
-1059462, 1059596, 1059736, 1059891, 1060089, 1060317, 1060569, and 1060817.
+After the Windows join, natural hostile-mob deaths exercised the new immediate
+respawn path. In the final verified sequence, OwnerBot10 requested respawn at
+10:26:26.704Z, answered `SearchingForSpawn` with `ClientReadyToSpawn` at
+10:26:26.754Z, received `ReadyToSpawn`, sent the final player respawn action at
+10:26:26.803Z, and received health 20 at 10:26:26.819Z. Subsequent movement
+corrections used the new spawn position, proving a live server-side respawn
+rather than a client-only state change. The final service check found BDS and
+all ten bot units `active/running`; the status endpoint reported ten players.
 The processes are intentionally still running.
 
 Evidence files:
@@ -82,15 +88,13 @@ Evidence files:
 ## Microsoft path and LAN access
 
 The hook still routes only the exact configured `ownerbot://local` issuer.
-Every other token enters the original BDS validator. A live Microsoft human
-login was not performed because no credentials were used by automation; the
-server log will distinguish a normal human XUID from the bots' explicit local
-acceptance and empty XUID.
+Every other token enters the original BDS validator. The Windows Minecraft
+client logged in live as `amatouhake` with a non-empty Microsoft XUID, spawned,
+sent `bots`, received all ten replies, and disconnected normally. The bots
+were separately logged as explicit local-ownerbot acceptances with empty XUIDs.
 
 The WSL mirrored host address is `192.168.1.5`; host-side HTTP signaling
-returned protocol 2193 and ten current players. Windows Hyper-V firewall has a
-default inbound-block policy. The attempted non-elevated creation of narrow
-LAN rules was denied with Windows error 5, so an Administrator PowerShell must
-run `scripts/allow-video-demo-firewall.ps1` before the Android LAN join. The
-script permits only TCP 19261 and UDP 20000-20100 from `192.168.1.0/24` and
-does not restart or alter the running services.
+returned protocol 2193 and ten current players. The administrator firewall
+helper installed narrow TCP 19261/19263 and UDP 20000-20100 rules. Enabling
+WSL `hostAddressLoopback=true` fixed same-host WebRTC's reverse UDP route, and
+Windows Minecraft then joined successfully through `192.168.1.5:19261`.

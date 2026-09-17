@@ -10,8 +10,7 @@ The server uses NetherNet signaling on TCP port 19261 and an explicit
 WebRTC clients; one UDP allocation admits only one peer.
 
 This host uses WSL mirrored networking. Its Hyper-V firewall defaults to
-blocking inbound traffic, and Windows cannot reach this WSL listener through
-its own LAN address without a TCP proxy. With the demo server running, open an
+blocking inbound traffic. With the demo server running, open an
 **Administrator PowerShell** and run the committed LAN-only helper:
 
 ```powershell
@@ -19,12 +18,9 @@ powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedr
 ```
 
 The helper permits TCP 19261/19263 and UDP 20000-20100 only from
-`192.168.1.0/24`. It forwards the Windows LAN address on TCP 19263 to the
-working WSL localhost signaling endpoint on TCP 19261; the distinct public
-port avoids a mirrored-networking bind conflict with BDS. NetherNet WebRTC
-traffic continues directly over UDP. Connect the Windows Minecraft client to
-`192.168.1.5` port `19263`. Pass `-Remove` later to delete the firewall rules
-and TCP proxy.
+`192.168.1.0/24`. TCP 19263 remains available as a signaling diagnostic proxy,
+but the Minecraft client should use the direct endpoint described below.
+Pass `-Remove` later to delete the firewall rules and TCP proxy.
 Linux-side automation cannot approve the Windows UAC prompt.
 
 When the Minecraft client runs on the same Windows host as mirrored-mode WSL,
@@ -61,7 +57,8 @@ whitespace. Each bot replies `ready!`, repeatedly jumps using
 `PlayerAuthInput` for approximately ten seconds without horizontal input, then
 returns to persistent idle. An active cycle ignores repeated triggers; a new
 trigger works after completion. Messages sent by `OwnerBot01` through
-`OwnerBot10` cannot trigger the action.
+`OwnerBot10` cannot trigger the action. If a bot dies, it immediately performs
+the Bedrock respawn handshake and returns to idle without reconnecting.
 
 Runtime logs are under:
 
