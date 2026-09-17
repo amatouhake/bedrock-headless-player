@@ -44,7 +44,21 @@ if ($LASTEXITCODE -ne 0) {
     throw "wsl --shutdown failed with exit code $LASTEXITCODE."
 }
 
-Start-Sleep -Seconds 4
+$userManagerReady = $false
+for ($attempt = 0; $attempt -lt 60; $attempt++) {
+    # The first command also starts the distribution after wsl --shutdown.
+    & $wsl -d $Distribution -- sh -lc "systemctl --user is-system-running >/dev/null 2>&1"
+    if ($LASTEXITCODE -eq 0) {
+        $userManagerReady = $true
+        break
+    }
+    Start-Sleep -Milliseconds 500
+}
+
+if (-not $userManagerReady) {
+    & $wsl -d $Distribution -- sh -lc "systemctl --user status --no-pager"
+    throw "The WSL user service manager did not become ready within 30 seconds."
+}
 
 Write-Host "Starting BDS and ten bots with host-address loopback enabled..."
 & $wsl -d $Distribution --cd $RepoPath ./scripts/start-video-demo.sh
