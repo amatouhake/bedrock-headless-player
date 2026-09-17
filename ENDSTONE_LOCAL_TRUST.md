@@ -7,9 +7,9 @@ official Linux BDS 1.26.51.1, build 51061372, protocol 2193.
 
 The implementation is split between:
 
-- Endstone branch `investigate/local-ownerbot-auth`, commit
-  `68ccf906de0d81442de3df4217319de13b32703c`, based on Endstone `v0.11`
-  commit `9066c3cc1f37fb0f5df6a73aec2a9b7310fc4451`;
+- Endstone branch `investigate/local-ownerbot-auth-v0.11.11`, commit
+  `0d677f9d33c8a465266e03672d0fdf82f2a42038`, based on the official
+  Endstone `v0.11.11` tag `37b395378d91d6d20f1c52bf9d79dbd20e152458`;
 - this repository's `investigate/endstone-local-trust` branch;
 - unchanged `bedrock-protocol` commit
   `fb0af8e388127724c323fd46800e47ba004b1c55` and `minecraft-data` commit
@@ -42,15 +42,15 @@ path distinguishable from Microsoft authentication.
 
 ## Build Endstone
 
-Use the exact base revision and branch:
+Use the exact release tag and branch:
 
 ```bash
 cd /home/kenke/bedrock-fake-player-lab/tmp
 git clone https://github.com/EndstoneMC/endstone.git endstone-reference
 cd endstone-reference
-git switch --detach 9066c3cc1f37fb0f5df6a73aec2a9b7310fc4451
-git switch -c investigate/local-ownerbot-auth
-# Apply or fetch commits 41a65719 and 68ccf906 from the saved experiment.
+git switch --detach v0.11.11
+git switch -c investigate/local-ownerbot-auth-v0.11.11
+# Apply or fetch commits 240d809aa, 6d38b50cb, and 0d677f9d3.
 
 conan install . --build=missing -s '&:build_type=RelWithDebInfo'
 source build/RelWithDebInfo/generators/conanbuild.sh
@@ -65,7 +65,7 @@ libc++20/libc++abi20/libunwind20 packages under
 `tmp/endstone-sysroot20` and put their include/library paths in
 `CPLUS_INCLUDE_PATH`, `LIBRARY_PATH`, and `LD_LIBRARY_PATH`. This is a host
 workaround, not a runtime design requirement. The resulting suite passed
-232/232 tests.
+232/232 C++ tests and 107/107 Python tests.
 
 Stage/install the resulting Endstone package by the project's normal wheel
 workflow, or install the built runtime and Python extension into an Endstone
@@ -112,6 +112,7 @@ allow-list=false
 transport=nethernet
 server-port=19261
 max-players=20
+server-udp-ports=20000-20100
 ```
 
 No experiment or behavior pack is needed.
@@ -161,3 +162,5 @@ The auth modes remain explicit. The client never downgrades
 
 See [`evidence/2026-09-17-endstone-local-trust.md`](evidence/2026-09-17-endstone-local-trust.md)
 for the complete test record and standalone-hook assessment.
+
+For the persistent ten-client video setup, use [`VIDEO_DEMO.md`](VIDEO_DEMO.md).

@@ -20,6 +20,13 @@ function position (value) {
   return { x: coordinates[0], y: coordinates[1], z: coordinates[2] }
 }
 
+function boolean (value) {
+  if (value === undefined) return undefined
+  if (value === 'true') return true
+  if (value === 'false') return false
+  throw new Error(`Expected true or false, got: ${value}`)
+}
+
 async function main () {
   const options = args(process.argv.slice(2))
   const overrides = {
@@ -37,6 +44,12 @@ async function main () {
     localAuthAudience: options['local-auth-audience'],
     localAuthVariant: options['local-auth-variant'],
     identityId: options['identity-id'],
+    persistent: boolean(options.persistent),
+    demoEnabled: boolean(options['demo-enabled']),
+    demoTrigger: options['demo-trigger'],
+    jumpDurationMs: options['jump-duration-ms'] && Number(options['jump-duration-ms']),
+    replyStaggerMs: options['reply-stagger-ms'] && Number(options['reply-stagger-ms']),
+    logOtherPlayerPositions: boolean(options['log-other-player-positions']),
     idleBeforeMs: options['idle-before-ms'] && Number(options['idle-before-ms']),
     moveMs: options['move-ms'] && Number(options['move-ms']),
     idleAfterMs: options['idle-after-ms'] && Number(options['idle-after-ms']),
@@ -44,6 +57,9 @@ async function main () {
   }
   for (const key of Object.keys(overrides)) if (overrides[key] === undefined) delete overrides[key]
   const player = new HeadlessPlayer(overrides)
+  const stop = signal => player.disconnect(`Received ${signal}`)
+  process.once('SIGINT', () => stop('SIGINT'))
+  process.once('SIGTERM', () => stop('SIGTERM'))
   await player.connect()
 }
 

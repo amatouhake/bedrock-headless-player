@@ -37,6 +37,12 @@ class HeadlessPlayer {
       localAuthIssuer: 'ownerbot://local',
       localAuthAudience: 'endstone://local-ownerbot',
       localAuthVariant: 'valid',
+      persistent: false,
+      demoEnabled: false,
+      demoTrigger: 'bots',
+      jumpDurationMs: 10000,
+      replyStaggerMs: 75,
+      logOtherPlayerPositions: false,
       ...options
     }
     if (this.options.auth === 'trusted-key') {
@@ -60,6 +66,11 @@ class HeadlessPlayer {
     this.neutralTicks = 0
     this.movementTicks = 0
     this.timer = null
+    this.replyTimers = new Set()
+    this.demoActive = false
+    this.airborne = false
+    this.verticalVelocity = 0
+    this.groundY = null
   }
 
   log (event, data = {}) {
@@ -138,6 +149,7 @@ class HeadlessPlayer {
       this.position = this.options.position
         ? copyPosition(this.options.position)
         : copyPosition(packet.player_position)
+      this.groundY = this.position.y
       // PlayerInputTick is a per-client prediction sequence. StartGame's
       // current_tick is the world clock and must not be used here.
       this.tick = 1n
@@ -156,21 +168,25 @@ class HeadlessPlayer {
     this.client.on('correct_player_move_prediction', packet => {
       if (packet.prediction_type !== 'player') return
       this.position = copyPosition(packet.position)
+      if (!this.airborne) this.groundY = this.position.y
       this.advanceInputTick(packet.tick)
       this.corrections.push({ tick: String(packet.tick), position: copyPosition(packet.position) })
       this.log('movement_correction', this.corrections.at(-1))
     })
     this.client.on('move_player', packet => {
       if (String(packet.runtime_id) !== String(this.client.entityId)) {
-        this.log('other_player_position', {
-          runtimeEntityId: String(packet.runtime_id),
-          expectedRuntimeEntityId: String(this.client.entityId),
-          mode: packet.mode,
-          position: copyPosition(packet.position)
-        })
+        if (this.options.logOtherPlayerPositions) {
+          this.log('other_player_position', {
+            runtimeEntityId: String(packet.runtime_id),
+            expectedRuntimeEntityId: String(this.client.entityId),
+            mode: packet.mode,
+            position: copyPosition(packet.position)
+          })
+        }
         return
       }
       this.position = copyPosition(packet.position)
+      if (!this.airborne) this.groundY = this.position.y
       this.advanceInputTick(packet.tick)
       this.log('server_position', {
         mode: packet.mode,
@@ -179,6 +195,7 @@ class HeadlessPlayer {
       })
     })
     this.client.on('error', error => this.fail(error))
+    this.client.on('text', packet => this.handleText(packet))
     this.client.on('kick', packet => this.fail(new Error(`Kicked: ${packet.message}`)))
     this.client.on('close', reason => {
       if (!this.disconnecting) this.fail(new Error(`Connection closed unexpectedly: ${reason || 'no reason'}`))
@@ -215,6 +232,28 @@ class HeadlessPlayer {
     const moving = this.input === 'forward'
     const previous = copyPosition(this.position)
     if (moving) this.position.z += this.options.speedPerTick
+    const inputData = moving ? ['up'] : []
+    const now = Date.now()
+    let startedJump = false
+    if (this.demoActive && now < this.demoEndsAt && !this.airborne) {
+      this.airborne = true
+      this.verticalVelocity = 0.42
+      startedJump = true
+      inputData.push('jump_down', 'start_jumping')
+    }
+    if (this.airborne) {
+      inputData.push('jumping')
+      this.position.y += this.verticalVelocity
+      this.verticalVelocity = (this.verticalVelocity - 0.08) * 0.98
+      if (this.verticalVelocity < 0 && this.position.y <= this.groundY) {
+        this.position.y = this.groundY
+        this.verticalVelocity = 0
+        this.airborne = false
+        if (now >= this.demoEndsAt) this.finishDemo()
+      }
+    } else if (this.demoActive && now >= this.demoEndsAt) {
+      this.finishDemo()
+    }
     const delta = {
       x: this.position.x - previous.x,
       y: this.position.y - previous.y,
@@ -226,7 +265,7 @@ class HeadlessPlayer {
       position: copyPosition(this.position),
       move_vector: { x: 0, z: moving ? 1 : 0 },
       head_yaw: 0,
-      input_data: moving ? ['up'] : [],
+      input_data: inputData,
       input_mode: 'mouse',
       play_mode: 'normal',
       interaction_model: 'crosshair',
@@ -245,13 +284,69 @@ class HeadlessPlayer {
     this.sentTicks++
     if (moving) this.movementTicks++
     else this.neutralTicks++
+    if (startedJump) this.log('demo_jump', { position: copyPosition(this.position) })
     this.tick++
+  }
+
+  handleText (packet) {
+    if (!this.options.demoEnabled || packet.type !== 'chat') return
+    const message = String(packet.message || '').trim()
+    const source = String(packet.source_name || '')
+    this.log('chat_received', { source, message })
+    if (message.toLowerCase() !== this.options.demoTrigger.toLowerCase()) return
+    if (/^OwnerBot\d{2}$/i.test(source)) return
+    this.startDemo(source)
+  }
+
+  startDemo (source) {
+    if (this.demoActive) {
+      this.log('demo_trigger_ignored', { source, reason: 'already-active' })
+      return false
+    }
+    this.demoActive = true
+    this.demoEndsAt = Date.now() + this.options.jumpDurationMs
+    const sequence = Number.parseInt(this.options.username.match(/(\d+)$/)?.[1] || '0', 10)
+    const replyTimer = setTimeout(() => {
+      this.replyTimers.delete(replyTimer)
+      if (!this.client || this.client.status !== 4) return
+      this.sendChat('ready!')
+      this.log('demo_reply', { message: 'ready!' })
+    }, Math.max(0, sequence - 1) * this.options.replyStaggerMs)
+    this.replyTimers.add(replyTimer)
+    this.log('demo_started', { source, durationMs: this.options.jumpDurationMs })
+    return true
+  }
+
+  sendChat (message) {
+    if (!this.client || this.client.status !== 4) throw new Error('Cannot send chat before the player is connected')
+    this.client.queue('text', {
+      needs_translation: false,
+      category: 'authored',
+      type: 'chat',
+      source_name: this.options.username,
+      message,
+      xuid: '',
+      platform_chat_id: '',
+      has_filtered_message: false,
+      filtered_message: undefined
+    })
+    this.log('chat_sent', { message })
+  }
+
+  finishDemo () {
+    if (!this.demoActive) return
+    this.demoActive = false
+    this.log('demo_completed', { position: this.position && copyPosition(this.position) })
   }
 
   async runLifecycle () {
     try {
       this.log('spawn', { position: copyPosition(this.position) })
       this.startTicks()
+      if (this.options.persistent) {
+        this.log('persistent_idle', { demoEnabled: this.options.demoEnabled })
+        return
+      }
       await wait(this.options.idleBeforeMs)
       this.input = 'forward'
       this.log('movement_started', { position: copyPosition(this.position) })
@@ -287,10 +382,23 @@ class HeadlessPlayer {
     if (this.failed) return
     this.failed = true
     clearInterval(this.timer)
+    for (const timer of this.replyTimers) clearTimeout(timer)
+    this.replyTimers.clear()
     this.errors.push(error)
     this.log('error', { message: error.message, stack: error.stack })
     this.client?.close()
     this.reject?.(error)
+  }
+
+  disconnect (reason = 'Headless player stopped') {
+    if (this.disconnecting) return
+    clearInterval(this.timer)
+    for (const timer of this.replyTimers) clearTimeout(timer)
+    this.replyTimers.clear()
+    this.disconnecting = true
+    this.client?.disconnect?.(reason)
+    this.log('disconnected_cleanly', { reason })
+    this.resolve?.({ position: this.position && copyPosition(this.position), corrections: this.corrections })
   }
 }
 
