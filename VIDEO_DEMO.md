@@ -50,7 +50,9 @@ The launcher creates user-level transient services named
 `ownerbot-video-bds.service` and `ownerbot-video-bot-01.service` through
 `ownerbot-video-bot-10.service`. This keeps them alive after the launching
 terminal exits. It starts the first bot alone to establish the server identity
-pin, then starts the remaining clients.
+pin, then starts the remaining clients. It also builds and installs the small
+`endstone-ownerbot-demo` wheel from `endstone-plugins/ownerbot-demo`; no plugin
+download is required.
 
 In normal player chat, send `bots` with any capitalization and optional outer
 whitespace. Each bot replies `ready!`, repeatedly jumps using
@@ -59,6 +61,14 @@ returns to persistent idle. An active cycle ignores repeated triggers; a new
 trigger works after completion. Messages sent by `OwnerBot01` through
 `OwnerBot10` cannot trigger the action. If a bot dies, it immediately performs
 the Bedrock respawn handshake and returns to idle without reconnecting.
+
+Send `bots tp` with any capitalization and optional outer whitespace to bring
+all ten OwnerBots to the speaking player's current position. The action uses
+Endstone's native `Player.teleport(Location)` API rather than a Minecraft
+command, and does not enable commands or cheats. A bot that is in its death
+cycle when the message arrives is sent to the same position on the next server
+tick after respawn. The server log records the request, each named bot's result,
+and the target coordinate.
 
 Runtime logs are under:
 

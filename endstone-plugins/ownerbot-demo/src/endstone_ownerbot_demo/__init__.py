@@ -1,0 +1,1 @@
+"""Endstone OwnerBot demo plugin."""

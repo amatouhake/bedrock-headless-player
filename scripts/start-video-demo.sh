@@ -21,6 +21,8 @@ NODE_BIN="$(command -v node)"
 
 mkdir -p "$RUNTIME_DIR" "$BOT_DIR"
 
+"$PROJECT_ROOT/scripts/build-ownerbot-demo-plugin.sh"
+
 [[ "$(sed -n 's/^online-mode=//p' "$SERVER_DIR/server.properties" | tail -1)" == true ]] || { echo 'online-mode must be true' >&2; exit 1; }
 [[ "$(sed -n 's/^allow-cheats=//p' "$SERVER_DIR/server.properties" | tail -1)" == false ]] || { echo 'allow-cheats must be false' >&2; exit 1; }
 [[ "$(sed -n 's/^transport=//p' "$SERVER_DIR/server.properties" | tail -1)" == nethernet ]] || { echo 'transport must be nethernet' >&2; exit 1; }
@@ -42,6 +44,27 @@ if ss -ltn | awk '{print $4}' | grep -Eq "(^|:)$PORT$"; then
   echo "TCP port $PORT is already in use" >&2
   exit 1
 fi
+
+# A clean NetherNet shutdown can briefly leave the dual-stack signaling
+# address unavailable even after it disappears from the LISTEN table. Match
+# Endstone's actual bind check so an immediate restart is reliable.
+port_is_bindable() {
+  PORT_TO_CHECK="$PORT" python3 - <<'PY' >/dev/null 2>&1
+import os
+import socket
+
+port = int(os.environ["PORT_TO_CHECK"])
+dualstack = socket.has_dualstack_ipv6()
+family = socket.AF_INET6 if dualstack else socket.AF_INET
+with socket.create_server(("", port), family=family, dualstack_ipv6=dualstack):
+    pass
+PY
+}
+for _ in {1..120}; do
+  port_is_bindable && break
+  sleep 0.25
+done
+port_is_bindable || { echo "TCP port $PORT is not yet reusable" >&2; exit 1; }
 
 rm -f "$PIN" "$SERVER_PID"
 [[ -p "$SERVER_FIFO" ]] || { rm -f "$SERVER_FIFO"; mkfifo "$SERVER_FIFO"; }

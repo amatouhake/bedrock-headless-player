@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node src/cli.js",
     "ownerbot:key": "node scripts/ownerbot-key.js",
+    "test:ownerbot-demo-plugin": "python3 -m unittest discover -s endstone-plugins/ownerbot-demo/tests -p 'test_*.py'",
     "install:server-bot": "node scripts/install-server-side-bot.js",
     "test": "node --test"
   },
