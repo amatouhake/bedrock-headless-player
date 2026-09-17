@@ -10,16 +10,20 @@ The server uses NetherNet signaling on TCP port 19261 and an explicit
 WebRTC clients; one UDP allocation admits only one peer.
 
 This host uses WSL mirrored networking. Its Hyper-V firewall defaults to
-blocking inbound traffic. Before joining from another LAN device, open an
-**Administrator PowerShell** and run the committed LAN-only rule helper:
+blocking inbound traffic, and Windows cannot reach this WSL listener through
+its own LAN address without a TCP proxy. With the demo server running, open an
+**Administrator PowerShell** and run the committed LAN-only helper:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedrock-fake-player-lab\bedrock-headless-player\scripts\allow-video-demo-firewall.ps1"
 ```
 
 The helper permits TCP 19261 and UDP 20000-20100 only from
-`192.168.1.0/24`. Pass `-Remove` later to delete both Windows and Hyper-V
-rules. Linux-side automation cannot approve the Windows UAC prompt.
+`192.168.1.0/24`. It also forwards the Windows LAN address on TCP 19261 to the
+working WSL localhost signaling endpoint; NetherNet WebRTC traffic continues
+directly over UDP. Connect the Windows Minecraft client to `192.168.1.5` port
+`19261`. Pass `-Remove` later to delete the firewall rules and TCP proxy.
+Linux-side automation cannot approve the Windows UAC prompt.
 
 Start the server and ten persistent clients with:
 
