@@ -11,7 +11,7 @@ $bdsPort = 19261
 $proxyPort = 19263
 
 $rules = @(
-    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = "$proxyPort" },
+    @{ Name = "OwnerBotBDS-TCP"; Display = "OwnerBot BDS NetherNet TCP"; Protocol = "TCP"; Ports = "$bdsPort,$proxyPort" },
     @{ Name = "OwnerBotBDS-UDP"; Display = "OwnerBot BDS NetherNet UDP"; Protocol = "UDP"; Ports = "20000-20100" }
 )
 
@@ -122,7 +122,7 @@ if ($Remove) {
         throw "TCP portproxy was configured but is not listening on ${ListenAddress}:$proxyPort."
     }
 
-    Write-Host "Allowed BDS signaling TCP $proxyPort and WebRTC UDP 20000-20100 from $LanSubnet."
+    Write-Host "Allowed BDS signaling TCP $bdsPort,$proxyPort and WebRTC UDP 20000-20100 from $LanSubnet."
     Write-Host "WSL Hyper-V VM creator ID: $wslCreatorId"
     Write-Host "Forwarding ${ListenAddress}:$proxyPort to 127.0.0.1:$bdsPort."
 }

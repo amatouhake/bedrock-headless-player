@@ -18,7 +18,7 @@ its own LAN address without a TCP proxy. With the demo server running, open an
 powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedrock-fake-player-lab\bedrock-headless-player\scripts\allow-video-demo-firewall.ps1"
 ```
 
-The helper permits TCP 19261 and UDP 20000-20100 only from
+The helper permits TCP 19261/19263 and UDP 20000-20100 only from
 `192.168.1.0/24`. It forwards the Windows LAN address on TCP 19263 to the
 working WSL localhost signaling endpoint on TCP 19261; the distinct public
 port avoids a mirrored-networking bind conflict with BDS. NetherNet WebRTC
@@ -26,6 +26,22 @@ traffic continues directly over UDP. Connect the Windows Minecraft client to
 `192.168.1.5` port `19263`. Pass `-Remove` later to delete the firewall rules
 and TCP proxy.
 Linux-side automation cannot approve the Windows UAC prompt.
+
+When the Minecraft client runs on the same Windows host as mirrored-mode WSL,
+NetherNet ICE also needs WSL host-address loopback. Without it, signaling
+works but BDS sends UDP replies to its own mirrored copy of the host address,
+and Minecraft reports `Door`. Enable the setting, cleanly restart WSL and the
+demo, and reapply the firewall rules with one **Administrator PowerShell**
+command:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedrock-fake-player-lab\bedrock-headless-player\scripts\enable-wsl-host-loopback-and-restart-demo.ps1"
+```
+
+This stops all WSL distributions through `wsl --shutdown`; close or save any
+other WSL work first. It preserves the previous `.wslconfig` once as
+`.wslconfig.ownerbot-backup`. After it reports success, connect the Windows
+Minecraft client directly to `192.168.1.5` port `19261`.
 
 Start the server and ten persistent clients with:
 
