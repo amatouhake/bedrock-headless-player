@@ -101,3 +101,62 @@ test('demo chat reply serializes with the 1.26.50 packet layout', async () => {
   assert.equal(decoded.has_filtered_message, false)
   player.disconnect()
 })
+
+test('death requests one immediate respawn and acknowledges the ready state', () => {
+  const serializer = createSerializer('1.26.50')
+  const deserializer = createDeserializer('1.26.50')
+  const queued = []
+  const player = new HeadlessPlayer({ username: 'OwnerBot01', demoEnabled: true })
+  player.client = {
+    status: 4,
+    entityId: 42n,
+    queue: (name, packet) => queued.push({ name, packet })
+  }
+  player.position = { x: 1, y: 64, z: 2 }
+  player.groundY = 64
+  player.demoActive = true
+
+  player.handleHealth({ health: 0 })
+  player.requestRespawn('death_info')
+  assert.equal(queued.length, 1)
+  assert.equal(queued[0].name, 'player_action')
+  assert.equal(queued[0].packet.action, 'respawn')
+  assert.equal(queued[0].packet.runtime_entity_id, 42n)
+  assert.equal(player.demoActive, false)
+
+  const actionWire = serializer.createPacketBuffer({ name: queued[0].name, params: queued[0].packet })
+  const action = deserializer.parsePacketBuffer(actionWire).data
+  assert.equal(action.name, 'player_action')
+  assert.equal(action.params.action, 'respawn')
+  assert.equal(action.params.face, -1)
+
+  assert.equal(player.handleRespawn({
+    position: { x: 8, y: 70, z: -4 },
+    state: 0,
+    runtime_entity_id: 42n
+  }), false)
+  assert.equal(queued.length, 1)
+
+  assert.equal(player.handleRespawn({
+    position: { x: 8, y: 70, z: -4 },
+    state: 1,
+    runtime_entity_id: 42n
+  }), true)
+  assert.equal(queued.length, 2)
+  assert.equal(queued[1].name, 'respawn')
+  assert.equal(queued[1].packet.state, 2)
+  assert.deepEqual(player.position, { x: 8, y: 70, z: -4 })
+
+  const respawnWire = serializer.createPacketBuffer({ name: queued[1].name, params: queued[1].packet })
+  const response = deserializer.parsePacketBuffer(respawnWire).data
+  assert.equal(response.name, 'respawn')
+  assert.equal(response.params.state, 2)
+  assert.equal(response.params.runtime_entity_id, 42n)
+
+  player.requestRespawn('delayed_death_info')
+  assert.equal(queued.filter(entry => entry.name === 'player_action').length, 1)
+  player.handleHealth({ health: 20 })
+  player.handleHealth({ health: 0 })
+  assert.equal(queued.filter(entry => entry.name === 'player_action').length, 2)
+  player.disconnect()
+})
