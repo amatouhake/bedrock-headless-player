@@ -1,0 +1,113 @@
+[18:04:24 INFO]: setting up server logging...
+[18:04:24 INFO]: Starting Server
+[18:04:24 INFO]: Version: 1.26.51.1
+[18:04:24 INFO]: Session ID: eb8f38ee-57f3-4e2c-b67e-a6b674025206
+[18:04:24 INFO]: Build ID: 51061372
+[18:04:24 INFO]: Branch: r/26_u5
+[18:04:24 INFO]: Commit ID: 0559ac59aa24e42d30e238bc55cdb306232a6507
+[18:04:24 INFO]: Configuration: Publish
+[18:04:24 INFO]: Contents of server.properties: {}
+[18:04:24 INFO]: Level Name: Endstone Ownerbot 2651
+[18:04:24 INFO]: Profiler config ('bootstrap.json') load result: success=1, errorMessage=(null)
+[18:04:24 INFO]: No CDN config file found at: cdn_config.json for dedicated server
+[18:04:24 INFO]: Game mode: 0 Survival
+[18:04:24 INFO]: Difficulty: 1 EASY
+[18:04:24 WARNING]: Content logging to console is disabled.  Enable it with content-log-console-output-enabled=true in server.properties
+[18:04:24 INFO]: #####################################################
+[18:04:24 INFO]: #                                                   #
+[18:04:24 INFO]: #               LOADING VANILLA WORLD               #
+[18:04:24 INFO]: #                                                   #
+[18:04:24 INFO]: #####################################################
+[18:04:24 INFO]: This server is running Endstone version: 0.11.11 (Minecraft: 26.51)
+[18:04:25 INFO]: Accepting clients on [::]:19261
+[18:04:25 INFO]: Pack Stack - None
+[18:04:25 INFO]: Signed in to signaling service successfully
+[18:04:26 INFO]: Waiting for Minecraft services...
+[18:04:26 INFO]: Server started.
+[18:04:26 INFO]: ================ TELEMETRY MESSAGE ===================
+[18:04:26 INFO]: Server Telemetry is currently not enabled. 
+[18:04:26 INFO]: Enabling this telemetry helps us improve the game.
+[18:04:26 INFO]: To enable this feature, add the line 'emit-server-telemetry=true'
+[18:04:26 INFO]: to the server.properties file in the handheld/src-server directory
+[18:04:26 INFO]: ======================================================
+[18:04:26 INFO]: Packet limit config updated
+[18:04:28 INFO]: Local ownerbot authentication is enabled for issuer 'ownerbot://local'.
+[18:04:28 INFO]: Accepted local ownerbot 'OwnerBot01' (18f58048-ed00-5f4b-9ceb-aaf9560eaa6e) from issuer 'ownerbot://local'.
+[18:04:28 INFO]: Player connected: OwnerBot01, xuid: 
+[18:04:28 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:04:31 INFO]: Player Spawned: OwnerBot01 xuid: , pfid: 
+[18:04:31 INFO]: OwnerBot01 joined the game
+[18:04:33 INFO]: Accepted local ownerbot 'OwnerBot02' (ec344380-e8d9-5ef4-97b9-15c8db53f1d8) from issuer 'ownerbot://local'.
+[18:04:33 INFO]: Player connected: OwnerBot02, xuid: 
+[18:04:33 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:04:37 INFO]: Player Spawned: OwnerBot02 xuid: , pfid: 
+[18:04:37 INFO]: OwnerBot02 joined the game
+[18:04:39 INFO]: Accepted local ownerbot 'OwnerBot03' (22ca3b2f-b831-5985-89a1-b3d694689d23) from issuer 'ownerbot://local'.
+[18:04:39 INFO]: Player connected: OwnerBot03, xuid: 
+[18:04:39 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:04:43 INFO]: Player Spawned: OwnerBot03 xuid: , pfid: 
+[18:04:43 INFO]: OwnerBot03 joined the game
+[18:04:45 INFO]: Accepted local ownerbot 'OwnerBot04' (a755ce36-3152-5e93-98dd-b4962d270268) from issuer 'ownerbot://local'.
+[18:04:45 INFO]: Player connected: OwnerBot04, xuid: 
+[18:04:45 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:04:50 INFO]: Player Spawned: OwnerBot04 xuid: , pfid: 
+[18:04:50 INFO]: OwnerBot04 joined the game
+[18:04:52 INFO]: Accepted local ownerbot 'OwnerBot05' (5a2c956b-cd7e-5fc9-89cc-1b76b97a1374) from issuer 'ownerbot://local'.
+[18:04:52 INFO]: Player connected: OwnerBot05, xuid: 
+[18:04:52 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:04:58 INFO]: Player Spawned: OwnerBot05 xuid: , pfid: 
+[18:04:58 INFO]: OwnerBot05 joined the game
+[18:05:00 INFO]: Accepted local ownerbot 'OwnerBot06' (9005ad8b-74f5-50b6-a31a-5a80e2301da1) from issuer 'ownerbot://local'.
+[18:05:00 INFO]: Player connected: OwnerBot06, xuid: 
+[18:05:00 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:05:07 INFO]: Player Spawned: OwnerBot06 xuid: , pfid: 
+[18:05:07 INFO]: OwnerBot06 joined the game
+[18:05:10 INFO]: Accepted local ownerbot 'OwnerBot07' (39a58801-4476-538a-977d-cd232d3b8986) from issuer 'ownerbot://local'.
+[18:05:10 INFO]: Player connected: OwnerBot07, xuid: 
+[18:05:10 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:05:21 INFO]: Player Spawned: OwnerBot07 xuid: , pfid: 
+[18:05:21 INFO]: OwnerBot07 joined the game
+[18:05:23 INFO]: Accepted local ownerbot 'OwnerBot08' (292db713-c93c-5e5d-87eb-f766a99903eb) from issuer 'ownerbot://local'.
+[18:05:23 INFO]: Player connected: OwnerBot08, xuid: 
+[18:05:23 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:05:34 INFO]: Player Spawned: OwnerBot08 xuid: , pfid: 
+[18:05:34 INFO]: OwnerBot08 joined the game
+[18:05:36 INFO]: Accepted local ownerbot 'OwnerBot09' (6eb2fd61-16e0-578e-8ca7-97beb15467e9) from issuer 'ownerbot://local'.
+[18:05:36 INFO]: Player connected: OwnerBot09, xuid: 
+[18:05:36 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:05:48 INFO]: Player Spawned: OwnerBot09 xuid: , pfid: 
+[18:05:48 INFO]: OwnerBot09 joined the game
+[18:05:50 INFO]: Accepted local ownerbot 'OwnerBot10' (7583db66-b582-5d47-87e0-30d5632494d0) from issuer 'ownerbot://local'.
+[18:05:50 INFO]: Player connected: OwnerBot10, xuid: 
+[18:05:50 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:06:01 INFO]: Player Spawned: OwnerBot10 xuid: , pfid: 
+[18:06:01 INFO]: OwnerBot10 joined the game
+[18:06:08 INFO]: Accepted local ownerbot 'DemoDirector' (dad1db98-99a6-5253-b589-e4c4a8bf9201) from issuer 'ownerbot://local'.
+[18:06:08 INFO]: Player connected: DemoDirector, xuid: 
+[18:06:08 INFO]: Player PartyIdUpdate:  pfid: , partyid: , isLeader: false
+[18:06:29 INFO]: Player Spawned: DemoDirector xuid: , pfid: 
+[18:06:29 INFO]: DemoDirector joined the game
+[18:06:30 INFO]: <DemoDirector> bots
+[18:06:30 INFO]: <OwnerBot01> ready!
+[18:06:30 INFO]: <OwnerBot02> ready!
+[18:06:31 INFO]: <OwnerBot03> ready!
+[18:06:31 INFO]: <OwnerBot04> ready!
+[18:06:31 INFO]: <OwnerBot05> ready!
+[18:06:31 INFO]: <OwnerBot06> ready!
+[18:06:31 INFO]: <OwnerBot07> ready!
+[18:06:31 INFO]: <OwnerBot08> ready!
+[18:06:31 INFO]: <OwnerBot09> ready!
+[18:06:31 INFO]: <OwnerBot10> ready!
+[18:06:43 INFO]: <DemoDirector> Bots
+[18:06:43 INFO]: <OwnerBot01> ready!
+[18:06:43 INFO]: <OwnerBot02> ready!
+[18:06:44 INFO]: <OwnerBot03> ready!
+[18:06:44 INFO]: <OwnerBot04> ready!
+[18:06:44 INFO]: <OwnerBot05> ready!
+[18:06:44 INFO]: <OwnerBot06> ready!
+[18:06:44 INFO]: <OwnerBot07> ready!
+[18:06:44 INFO]: <OwnerBot08> ready!
+[18:06:44 INFO]: <OwnerBot09> ready!
+[18:06:44 INFO]: <OwnerBot10> ready!
+[18:06:57 INFO]: Player disconnected: DemoDirector, xuid: , pfid: 
+[18:06:57 INFO]: DemoDirector left the game

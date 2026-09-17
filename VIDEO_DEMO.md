@@ -9,6 +9,18 @@ The server uses NetherNet signaling on TCP port 19261 and an explicit
 `server-udp-ports=20000-20100` range. A range is required for simultaneous
 WebRTC clients; one UDP allocation admits only one peer.
 
+This host uses WSL mirrored networking. Its Hyper-V firewall defaults to
+blocking inbound traffic. Before joining from another LAN device, open an
+**Administrator PowerShell** and run the committed LAN-only rule helper:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "\\wsl.localhost\Ubuntu\home\kenke\bedrock-fake-player-lab\bedrock-headless-player\scripts\allow-video-demo-firewall.ps1"
+```
+
+The helper permits TCP 19261 and UDP 20000-20100 only from
+`192.168.1.0/24`. Pass `-Remove` later to delete both Windows and Hyper-V
+rules. Linux-side automation cannot approve the Windows UAC prompt.
+
 Start the server and ten persistent clients with:
 
 ```bash

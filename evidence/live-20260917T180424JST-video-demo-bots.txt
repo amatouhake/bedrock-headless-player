@@ -1,0 +1,11 @@
+Final persistent video-demo bot summary (sanitized; no tokens or keys)
+2026-09-17T09:04:26.901Z OwnerBot01 identity=18f58048-ed00-5f4b-9ceb-aaf9560eaa6e spawn=2026-09-17T09:04:31.331Z cycles=2 replies=2 jump_impulses=33 durations_ms=10200,10451 correction_y=65.620..69.126 errors=0
+2026-09-17T09:04:31.672Z OwnerBot02 identity=ec344380-e8d9-5ef4-97b9-15c8db53f1d8 spawn=2026-09-17T09:04:37.242Z cycles=2 replies=2 jump_impulses=33 durations_ms=10169,10419 correction_y=65.620..65.620 errors=0
+2026-09-17T09:04:37.499Z OwnerBot03 identity=22ca3b2f-b831-5985-89a1-b3d694689d23 spawn=2026-09-17T09:04:43.442Z cycles=2 replies=2 jump_impulses=33 durations_ms=10190,10459 correction_y=64.620..67.689 errors=0
+2026-09-17T09:04:43.830Z OwnerBot04 identity=a755ce36-3152-5e93-98dd-b4962d270268 spawn=2026-09-17T09:04:50.442Z cycles=2 replies=2 jump_impulses=40 durations_ms=10383,10235 correction_y=65.620..65.747 errors=0
+2026-09-17T09:04:50.945Z OwnerBot05 identity=5a2c956b-cd7e-5fc9-89cc-1b76b97a1374 spawn=2026-09-17T09:04:58.493Z cycles=2 replies=2 jump_impulses=40 durations_ms=10397,10262 correction_y=65.620..65.747 errors=0
+2026-09-17T09:04:58.847Z OwnerBot06 identity=9005ad8b-74f5-50b6-a31a-5a80e2301da1 spawn=2026-09-17T09:05:07.993Z cycles=2 replies=2 jump_impulses=33 durations_ms=10194,10460 correction_y=65.620..67.503 errors=0
+2026-09-17T09:05:08.357Z OwnerBot07 identity=39a58801-4476-538a-977d-cd232d3b8986 spawn=2026-09-17T09:05:21.469Z cycles=2 replies=2 jump_impulses=33 durations_ms=10196,10455 correction_y=65.620..65.620 errors=0
+2026-09-17T09:05:21.817Z OwnerBot08 identity=292db713-c93c-5e5d-87eb-f766a99903eb spawn=2026-09-17T09:05:34.417Z cycles=2 replies=2 jump_impulses=40 durations_ms=10403,10263 correction_y=65.620..65.747 errors=0
+2026-09-17T09:05:34.697Z OwnerBot09 identity=6eb2fd61-16e0-578e-8ca7-97beb15467e9 spawn=2026-09-17T09:05:48.127Z cycles=2 replies=2 jump_impulses=33 durations_ms=10180,10439 correction_y=65.620..65.620 errors=0
+2026-09-17T09:05:48.424Z OwnerBot10 identity=7583db66-b582-5d47-87e0-30d5632494d0 spawn=2026-09-17T09:06:01.076Z cycles=2 replies=2 jump_impulses=40 durations_ms=10374,10236 correction_y=65.620..65.747 errors=0
