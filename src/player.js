@@ -73,6 +73,7 @@ class HeadlessPlayer {
     this.groundY = null
     this.dead = false
     this.respawnPending = false
+    this.respawnReadySent = false
   }
 
   log (event, data = {}) {
@@ -301,12 +302,14 @@ class HeadlessPlayer {
     } else {
       this.dead = false
       this.respawnPending = false
+      this.respawnReadySent = false
     }
   }
 
   requestRespawn (source) {
     if (this.respawnPending || !this.client || this.client.status !== 4) return false
     this.respawnPending = true
+    this.respawnReadySent = false
     this.dead = true
     this.finishDemo()
     this.airborne = false
@@ -329,19 +332,26 @@ class HeadlessPlayer {
       runtimeEntityId: String(packet.runtime_entity_id)
     })
     // Mojang's PlayerRespawnState values are SearchingForSpawn=0,
-    // ReadyToSpawn=1 and ClientReadyToSpawn=2. Only ReadyToSpawn is the
-    // server request that requires the client acknowledgement.
+    // ReadyToSpawn=1 and ClientReadyToSpawn=2. Once the server starts its
+    // search, the client announces readiness exactly once. The server then
+    // finishes with ReadyToSpawn and the authoritative spawn position.
+    if (packet.state === 0) {
+      if (this.respawnReadySent) return false
+      this.respawnReadySent = true
+      this.client.queue('respawn', {
+        position: { x: 0, y: 0, z: 0 },
+        state: 2,
+        runtime_entity_id: this.client.entityId
+      })
+      this.log('respawn_ready_sent', { runtimeEntityId: String(this.client.entityId) })
+      return true
+    }
     if (packet.state !== 1) return false
     this.position = copyPosition(packet.position)
     this.groundY = this.position.y
     this.airborne = false
     this.verticalVelocity = 0
     this.dead = false
-    this.client.queue('respawn', {
-      position: copyPosition(packet.position),
-      state: 2,
-      runtime_entity_id: packet.runtime_entity_id
-    })
     this.log('respawn_completed', { position: copyPosition(this.position) })
     return true
   }

@@ -134,8 +134,19 @@ test('death requests one immediate respawn and acknowledges the ready state', ()
     position: { x: 8, y: 70, z: -4 },
     state: 0,
     runtime_entity_id: 42n
+  }), true)
+  assert.equal(queued.length, 2)
+  assert.equal(queued[1].name, 'respawn')
+  assert.equal(queued[1].packet.state, 2)
+  assert.equal(queued[1].packet.runtime_entity_id, 42n)
+  assert.deepEqual(queued[1].packet.position, { x: 0, y: 0, z: 0 })
+
+  assert.equal(player.handleRespawn({
+    position: { x: 9, y: 71, z: -5 },
+    state: 0,
+    runtime_entity_id: 42n
   }), false)
-  assert.equal(queued.length, 1)
+  assert.equal(queued.length, 2)
 
   assert.equal(player.handleRespawn({
     position: { x: 8, y: 70, z: -4 },
@@ -143,8 +154,6 @@ test('death requests one immediate respawn and acknowledges the ready state', ()
     runtime_entity_id: 42n
   }), true)
   assert.equal(queued.length, 2)
-  assert.equal(queued[1].name, 'respawn')
-  assert.equal(queued[1].packet.state, 2)
   assert.deepEqual(player.position, { x: 8, y: 70, z: -4 })
 
   const respawnWire = serializer.createPacketBuffer({ name: queued[1].name, params: queued[1].packet })
