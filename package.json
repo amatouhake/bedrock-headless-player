@@ -6,6 +6,7 @@
   "main": "src/player.js",
   "scripts": {
     "start": "node src/cli.js",
+    "ownerbot:key": "node scripts/ownerbot-key.js",
     "install:server-bot": "node scripts/install-server-side-bot.js",
     "test": "node --test"
   },
@@ -14,6 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "jsonwebtoken": "^9.0.3",
     "prismarine-nbt": "^2.8.0"
   }
 }

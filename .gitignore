@@ -16,6 +16,7 @@ tmp/
 profiles/
 auth-cache/
 .auth/
+.local-ownerbot/
 
 # Packet captures / binary diagnostics
 *.pcap

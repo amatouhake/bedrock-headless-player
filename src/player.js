@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const { createLocalOwnerbotAuth } = require('./local-ownerbot-auth')
 
 function loadProtocol (modulePath) {
   return require(path.resolve(modulePath))
@@ -31,12 +32,17 @@ class HeadlessPlayer {
       speedPerTick: 0.215,
       protocolPath: path.join(__dirname, '..', '..', 'forks', 'bedrock-protocol'),
       serverIdentityPinPath: path.join(__dirname, '..', '..', 'tmp', 'bds-runtime', 'server-identity.pin'),
+      ownerPrivateKeyPath: path.join(__dirname, '..', '.local-ownerbot', 'owner-private.pem'),
+      ownerPublicKeyPath: path.join(__dirname, '..', '.local-ownerbot', 'owner-public.pem'),
+      localAuthIssuer: 'ownerbot://local',
+      localAuthAudience: 'endstone://local-ownerbot',
+      localAuthVariant: 'valid',
       ...options
     }
     if (this.options.auth === 'trusted-key') {
       throw new Error('trusted-key authentication is unavailable with BDS 1.26.51.1/protocol 2193: online NetherNet reaches Bedrock login but rejects current self-signed tokens and historical trusted certificate chains')
     }
-    if (this.options.auth !== 'offline') {
+    if (!['offline', 'local-ownerbot'].includes(this.options.auth)) {
       throw new Error(`Unsupported authentication mode: ${this.options.auth}`)
     }
     if (this.options.transport === 'raknet') {
@@ -63,6 +69,26 @@ class HeadlessPlayer {
 
   connect () {
     this.protocol = loadProtocol(this.options.protocolPath)
+    let localAuth
+    if (this.options.auth === 'local-ownerbot') {
+      localAuth = createLocalOwnerbotAuth({
+        username: this.options.username,
+        privateKeyPath: this.options.ownerPrivateKeyPath,
+        publicKeyPath: this.options.ownerPublicKeyPath,
+        issuer: this.options.localAuthIssuer,
+        audience: this.options.localAuthAudience,
+        identityId: this.options.identityId,
+        variant: this.options.localAuthVariant
+      })
+      this.options.identityId = localAuth.identityId
+      this.log('local_ownerbot_auth', {
+        issuer: localAuth.issuer,
+        audience: localAuth.audience,
+        identityId: localAuth.identityId,
+        keyCreated: localAuth.created,
+        variant: this.options.localAuthVariant
+      })
+    }
     let serverIdentityPin
     if (fs.existsSync(this.options.serverIdentityPinPath)) {
       serverIdentityPin = fs.readFileSync(this.options.serverIdentityPinPath, 'utf8').trim()
@@ -73,7 +99,9 @@ class HeadlessPlayer {
       port: this.options.port,
       username: this.options.username,
       version: this.options.version,
-      offline: true,
+      offline: this.options.auth === 'offline',
+      authflow: localAuth?.authflow,
+      skinData: localAuth ? { SelfSignedId: localAuth.identityId } : undefined,
       raknetBackend: 'nethernet',
       nethernetServerKeyPin: serverIdentityPin || undefined,
       onNetherNetServerTrust: identity => {

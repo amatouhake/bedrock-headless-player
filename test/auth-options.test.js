@@ -30,3 +30,9 @@ test('keeps Microsoft authentication distinct from offline mode', () => {
     /Unsupported authentication mode: microsoft/
   )
 })
+
+test('accepts local-ownerbot only as an explicit NetherNet authentication mode', () => {
+  const player = new HeadlessPlayer({ auth: 'local-ownerbot', transport: 'nethernet' })
+  assert.equal(player.options.auth, 'local-ownerbot')
+  assert.equal(player.options.transport, 'nethernet')
+})
